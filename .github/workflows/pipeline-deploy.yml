@@ -47,8 +47,13 @@ jobs:
           uses: actions/download-artifact@v4
           with:          
             name: xcode-build
-        - name: list files
-          run: ls -la 
+
+        - name: Install Fastlane        
+          run: sudo gem install fastlane -NV
+          
+        - name: Setup Fastlane Match        
+          run: |
+            fastlane match development --readonly
 
         - name: Build Xcode Project        
           run: |
