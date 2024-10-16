@@ -47,13 +47,12 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           BUILD_CERTIFICATE_PROFILE_BASE64: ${{ secrets.BUILD_CERTIFICATE_PROFILE_BASE64 }}
-          APP_STORE_CONNECT_API_KEY_JSON: ${{ secrets.APP_STORE_CONNECT_API_KEY_JSON }}
         run: |
           echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode > /tmp/certificate.p12
           echo "$BUILD_CERTIFICATE_PROFILE_BASE64" | base64 --decode > /tmp/provisioning_profile.mobileprovision
-          security create-keychain -p 'tu-contraseña-del-llavero' build.keychain
+          security create-keychain -p '8672253' build.keychain
           security default-keychain -s build.keychain
-          security unlock-keychain -p 'tu-contraseña-del-llavero' build.keychain
+          security unlock-keychain -p '8672253' build.keychain
           security import /tmp/certificate.p12 -k build.keychain -P $P12_PASSWORD -T /usr/bin/codesign
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp /tmp/provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
