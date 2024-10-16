@@ -52,4 +52,4 @@ jobs:
 
         - name: Build Xcode Project        
           run: |
-            xcodebuild -workspace "WeSign QA.xcworkspace" -scheme "WeSign QA" -configuration Debug -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 15 Pro Max" build
+            xcodebuild -workspace "WeSign QA.xcworkspace" -scheme "WeSign QA" -configuration Debug -sdk iphoneos -destination 'generic/platform=iOS' -arch arm64 build -allowProvisioningUpdates
