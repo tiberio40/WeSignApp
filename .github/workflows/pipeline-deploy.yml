@@ -10,8 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:  
-    deploy:
-      #needs: build
+    build:
       runs-on: macos-latest
       steps:
         - uses: actions/checkout@v4
@@ -31,11 +30,11 @@ jobs:
         - name: Remove Xcode
           run: cordova platform rm ios
 
-        - name: List directory contents
-          run: ls -la ./platforms
-
-        - name: Build Xcode
-          run: cordova platform add ios
-
-        - name: List directory contents
-          run: ls -la ./platforms/ios
+        #- name: Crate Xcode Project
+        #  run: cordova platform add ios
+    deploy:
+      #needs: build
+      runs-on: macos-latest
+      steps:
+        - name: list files
+          run: ls -la ./platform
