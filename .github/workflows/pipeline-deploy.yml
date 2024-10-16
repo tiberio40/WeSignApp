@@ -47,6 +47,7 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           BUILD_CERTIFICATE_PROFILE_BASE64: ${{ secrets.BUILD_CERTIFICATE_PROFILE_BASE64 }}
+          APP_STORE_CONNECT_API_KEY_JSON: ${{ secrets.APP_STORE_CONNECT_API_KEY_JSON }}
         run: |
           echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode > /tmp/certificate.p12
           echo "$BUILD_CERTIFICATE_PROFILE_BASE64" | base64 --decode > /tmp/provisioning_profile.mobileprovision
@@ -57,6 +58,14 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp /tmp/provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
           security list-keychains -d user -s build.keychain login.keychain
+      - name: Authenticate with Apple
+        env:
+          FASTLANE_USER: ${{ secrets.APPLE_ID }}
+          FASTLANE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APP_STORE_CONNECT_API_KEY_JSON: ${{ secrets.APP_STORE_CONNECT_API_KEY_JSON }}
+        run: |
+          echo "$APP_STORE_CONNECT_API_KEY_JSON" | base64 --decode > /tmp/AuthKey.p8
+          fastlane match development --readonly --api_key_path /tmp/AuthKey.p8
 
       - name: Build Xcode Project        
         run: |
