@@ -16,9 +16,6 @@ jobs:
       steps:
         - uses: actions/checkout@v4
 
-        - name: List directory contents
-          run: ls -la 
-
         - name: Install Node.js
           uses: actions/setup-node@v4
           with:
@@ -31,9 +28,6 @@ jobs:
         - name: Install NPM
           run: npm install
 
-        - name: List directory contents
-          run: ls -la ./platforms
-
         - name: Remove Xcode
           run: cordova platform rm ios
 
@@ -44,4 +38,4 @@ jobs:
           run: cordova platform add ios
 
         - name: List directory contents
-          run: ls -la ./platforms
+          run: ls -la ./platforms/ios
