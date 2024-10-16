@@ -30,14 +30,18 @@ jobs:
         - name: Remove Xcode
           run: cordova platform rm ios
 
-        - name: Crate Xcode Project
+        - name: Create Xcode Project
           run: cordova platform add ios
 
+        - name: Build Xcode Project        
+          run: |
+            xcodebuild -workspace "WeSign QA.xcworkspace" -scheme "WeSign QA" -configuration Debug -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 15 Pro Max" build
+
         - name: Save Build Artifacts        
-          uses: actions/upload-artifact@v4     
+          uses: actions/upload-artifact@v4      
           with:          
             name: xcode-build          
-            path: platforms/ios
+            path: platforms/ios/build
     deploy:
       needs: build
       runs-on: macos-latest
