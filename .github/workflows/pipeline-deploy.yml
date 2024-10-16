@@ -52,4 +52,4 @@ jobs:
 
         - name: Build Xcode Project        
           run: |
-            xcodebuild -workspace "WeSign QA.xcworkspace" -scheme "WeSign QA" -configuration Debug -sdk iphoneos -destination 'generic/platform=iOS' build -allowProvisioningUpdates DEVELOPMENT_TEAM=<TU_EQUIPO_DE_DESARROLLO> IPHONEOS_DEPLOYMENT_TARGET=12.0
+            xcodebuild -workspace "WeSign QA.xcworkspace" -scheme "WeSign QA" -configuration Debug -sdk iphoneos -destination 'generic/platform=iOS' build -allowProvisioningUpdates DEVELOPMENT_TEAM=5W676X87Z3 IPHONEOS_DEPLOYMENT_TARGET=12.0
