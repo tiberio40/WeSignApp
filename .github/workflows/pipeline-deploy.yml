@@ -16,6 +16,9 @@ jobs:
       steps:
         - uses: actions/checkout@v4
 
+        - name: List directory contents
+          run: ls -la 
+
         - name: Install Node.js
           uses: actions/setup-node@v4
           with:
