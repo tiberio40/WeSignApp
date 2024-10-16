@@ -21,3 +21,6 @@ jobs:
           with:
             node-version: '18.4.0'
             cache: 'npm'
+            
+        - name: Install Cordova
+          run: npm install -g cordova
