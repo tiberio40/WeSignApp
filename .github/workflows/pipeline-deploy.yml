@@ -32,10 +32,10 @@ jobs:
           run: cordova platform rm ios
 
         - name: List directory contents
-          run: ls -la platforms/
+          run: ls -la ./platforms
 
         - name: Build Xcode
           run: cordova platform add ios
 
         - name: List directory contents
-          run: ls -la platforms/
+          run: ls -la ./platforms
