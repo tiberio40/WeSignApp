@@ -24,3 +24,6 @@ jobs:
             
         - name: Install Cordova
           run: npm install -g cordova
+
+        - name: Build Xcode
+          run: cordova build
