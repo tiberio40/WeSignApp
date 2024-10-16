@@ -28,6 +28,9 @@ jobs:
         - name: Install NPM
           run: npm install
 
+        - name: List directory contents
+          run: ls -la ./platforms
+
         - name: Remove Xcode
           run: cordova platform rm ios
 
