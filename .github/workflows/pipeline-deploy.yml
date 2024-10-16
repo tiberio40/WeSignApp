@@ -33,6 +33,18 @@ jobs:
         - name: Create Xcode Project
           run: cordova platform add ios
 
+        - name: Listar archivos
+          run: ls -la platforms/ios
+
+
+        - name: Verificar creación del proyecto Xcode
+          run: |
+            if [ ! -f "platforms/ios/WeSign QA.xcworkspace" ]; then
+              echo "El archivo WeSign QA.xcworkspace no se generó correctamente";
+              exit 1;
+            fi
+
+
         - name: Build Xcode Project        
           run: |
             xcodebuild -workspace "WeSign QA.xcworkspace" -scheme "WeSign QA" -configuration Debug -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 15 Pro Max" build
