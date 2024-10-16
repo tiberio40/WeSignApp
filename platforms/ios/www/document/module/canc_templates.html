@@ -1,0 +1,141 @@
+﻿<!--NEW LAYOUT-->
+<div ng-controller="CancelationTemplateController as tp" style="background-color:#f4f4f4;">
+
+    <div class="row" style="background-color:#f4f4f4; height:90vh;">
+
+        <div class="row" style="margin:0; padding:10px; padding-right: 0px;">
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Select a Template</span>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; margin-right: 20px; " ng->{{ tp.DocumentTypeObjName }} Creation</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin:0; padding:10px; margin-right:15px;">
+            <div class="col-xs-10 col-sm-10">
+                <input style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="tp.txtSearch" type="text" value="" placeholder="search template" />
+            </div>
+            <div class="col-xs-2 col-sm-2">
+                <button ng-click="tp.txtSearch = ''; tp.idSelected=''; tp.resetSelection()" style="width: 115px; height: 5vh; background-color:#6aa7f1; border-radius:5vh; border:0;" class="btn btn-primary">Clear</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin:0; padding:10px;">
+            <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0;  overflow:auto; height:67vh;">
+               
+                    <div ng-class="{selectedTemplate: template.Id === tp.idSelected}" class="col-xs-5 col-sm-5" style="width: 41vw;
+        border:2px solid #ccc; height: 10vh; margin-bottom:10px; margin-left:0px; margin-right:10px; background-color:#fff;" ng-repeat="template in tp.templates | filter : tp.criteriaMatch(tp.txtSearch)  track by $index ">
+                        <div class="row" ng-click="tp.settemplate(template.Id)" >
+                            <div class="col-xs-1 col-sm-1" style="margin-left: -1px; margin-top: -2px; height:10vh; width:3vw; background-color:#6aa7f1; border:2px solid #6aa7f1;">
+                            </div>
+                            <div class="col-xs-11 col-sm-11" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <span class="spanCustomerText" style="font-weight:bold;">{{template.Name}} </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <!--<div class="row" style="height:7vh; width: 90vw; position: absolute; bottom: 0;">
+            <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 40px;">
+                <input ng-click="tp.selectPrevStep()" value="Previous" style="text-align:left; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-prev btn btn-primary" type="button">
+            </div>
+            <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 10px;">
+                <input ng-hide="tp.idSelected == ''" ng-click="tp.selectNextStep('/')" value="Next" style="text-align:right; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-next btn btn-primary" type="button">
+            </div>
+        </div>-->
+    </div>
+
+</div>
+
+
+
+
+<!--OLD LAYOUT-->
+<!--<div ng-controller="TemplateController as tp" style="background-color:#ccc;">
+
+    <div class="row" style="background-color:#F3F2E8; height:70vh;">
+        <div class="col-xs-12 col-sm-12" style="height: 80vh;margin: 0;">
+            <div class="row" style="background-color: #ccc; margin-top: 0;">
+                <div class="col-xs-12 col-sm-12" style="margin-top: 15px;">
+                    <img src="images/tmplt-icon-sel.png" style="float:right;" />
+                    <span style="color:#0C4C93;display:block; margin-top: -5px; padding-bottom: 10px; color:rgba(0, 0, 0, 0.79); font-size:18px; font-family:'Open Sans'; text-transform:none;">Template</span>
+                </div>
+            </div>
+
+            <div class="row" style="background-color:#ECEAE0; padding: 20px;">
+                <div class="col-xs-10 col-sm-10">
+                    <input style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="tp.txtSearch" type="text" value="" placeholder="search template" />
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <button ng-click="tp.txtSearch = ''; tp.idSelected=''; tp.resetSelection()" style="width: 115px; height: 5vh; background-color:#0d4c93; border-radius:5vh;" class="btn btn-primary">Clear</button>
+                </div>
+            </div>
+
+            <div class="row" style="height: 50vh;">
+                    <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0; overflow-y:auto; height:50vh;">
+
+                        <div style="" ng-repeat="template in tp.templates| filter : tp.criteriaMatch(tp.txtSearch)">
+                            <div ng-click="tp.settemplate(template.Id)" ng-class="{selectedTemplate: template.Id === tp.idSelected}" class="col-xs-12 col-sm-12" style="border:2px solid #ccc; margin:10px; height: 10vh;-webkit-box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);border-radius: 6px !important; width:98%; text-transform: none; ">
+
+                                <div class="row" style="height: 10vh;">
+                                    <div class="col-xs-2 col-sm-2">
+                                        <img style="height: 10vh; padding-bottom: 10px; padding-top: 5px;" src="images/agreement-big-thumb.png" />
+                                    </div>
+                                    <div class="col-xs-10 col-sm-10">
+                                        <p>
+                                            <span style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">{{template.Name}}</span>
+                                        </p>
+
+                                        <p>
+                                            <span style="color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">Start Date: </span>
+                                            <span style="color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">2017-01-01</span>
+
+                                            <span style="margin-left:50px; color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">Max Value: </span>
+                                            <span style="color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">40000</span>
+
+                                        </p>
+
+                                        <p>
+                                            <span style="padding-left: 6px; color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">End Date: </span>
+                                            <span style="color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">2018-01-01</span>
+
+                                            <span style="margin-left:50px; color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">Current Value: </span>
+                                            <span style="color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">30000</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+    <div class="row" style="width:100%; height:5vh; background-color:#F3F2E8;position:absolute; margin-top: -15px;">
+        <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 25px;">
+            <input ng-click="tp.navigateTo2('/')" value="Previous" style="height: 50px; width: 200px; border-radius: 25px; background-color: #0d4c93; border:0;" class="button-prev btn btn-primary" type="button">
+        </div>
+        <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 25px;">
+            <input ng-hide="tp.idSelected == ''" ng-click="tp.selectNextStep('/')" value="Next" style="height: 50px; width: 200px; border-radius: 25px; background-color: #0d4c93; border:0;" class="button-next btn btn-primary" type="button">
+        </div>
+    </div>
+
+
+    </div>-->

@@ -1,0 +1,67 @@
+﻿<div ng-controller="MdCancelController as md" style="background-color:#f4f4f4;">
+    <div class="row" style="background-color:#f4f4f4; height:90vh;">
+        <div class="row" style="margin:0; padding:10px; padding-right: 0px;">
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Select Document to Cancel</span>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; margin-right: 20px; " ng->{{ md.DocumentTypeObjName }} Creation</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin-left: 25px; margin-right: 25px; margin-top:-30px;">
+            <div class="row" style="width:88vw;  margin-left:8px; height: 50vh; margin-bottom:15px;">
+                <table id="docListTable" dt-options="md.dtOptions" dt-column-defs="md.dtColumnDefs" style="margin: -120px 0; overflow-y:auto; margin-top:15px; table-layout:auto;height:50vh !important;" datatable="ng" class="table-striped row-border hover">
+                    <thead style="height:55px; width:auto;">
+                        <tr style="background-color:#093162; color:#fff; white-space:nowrap;">
+                            <th ng-show="col.show" ng-repeat='col in md.dtColumns'>{{col.Name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody style="overflow:auto; height: 56vh; width:auto;">
+                        <tr ng-class="{true:'selectedRow'}[doc.DocumentId == vm.documentMasterDetails.DocumentId]" style="white-space:nowrap;  overflow:auto;" ng-repeat='doc in md.documents track by $index'>
+                            <td ng-show="col.show">{{doc.DocumentId}}</td>
+                            <td>{{doc.DocumentNumber}}</td>
+                            <td>{{doc.Owner}}</td    >
+                            <td>{{doc.CustomerName}}</td>
+                            <td>{{doc.TemplateName}}</td>
+                            <td>{{doc.CreationDate}}</td>
+                            <td>{{doc.StartDate | date: 'yyyy-MM-dd'}}</td>
+                            <td>{{doc.EndDate | date: 'yyyy-MM-dd'}}</td>
+                            <td>{{doc.StepName}}</td>
+                            <td>{{doc.GeographyCode}}</td>
+                            <td>{{doc.ContractValue}}</td>
+                            <td>{{doc.Comment}}</td>
+                            <td>{{doc.BudgetName}}</td>
+                            <td ng-show="col.show">{{doc.StepCode}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span style="color:red" ng-show="!md.IsDocumentSelected">Select a document to cancel.</span>
+
+            </div>
+        </div>
+
+
+        <div class="row" style="margin-left: 25px; margin-right: 25px;">
+            <div class="col-xs-3 col-sm-3" style="text-align:right;">
+                <span class="spanCustomerText" style="font-weight:bold;">Cancellation Date</span>
+            </div>
+            <div class="col-xs-9 col-sm-9">
+                <input ng-change="md.validateCancelationDate()"  type="date" ng-model="md.documentMasterDetails.CancelationDate" style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" type="text" value="" />
+                <span style="color:red" ng-show="!md.IsCancelationDateValid">{{md.CancelationDateValidationMessage}}</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin-left: 25px; margin-right: 25px; margin-top:10px;">
+            <div class="col-xs-3 col-sm-3" style="text-align:right;">
+                <span class="spanCustomerText" style="font-weight:bold;">Reason</span>
+            </div>
+            <div class="col-xs-9 col-sm-9">
+                <textarea ng-change="md.ReasonChanged()" ng-class="{'invalidInput': !md.IsReasonValid}" cols="76" rows="5" ng-model="md.documentMasterDetails.Reason"></textarea>
+                <span style="color:red" ng-show="!md.IsReasonValid">{{md.ReasonValidationMessage}}</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+

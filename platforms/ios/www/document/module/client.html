@@ -1,0 +1,265 @@
+﻿<div ng-controller="SelectClientController as sc" style="background-color:#f4f4f4; ">
+
+
+    <div id="modalCustomerDetail" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="background-color: #F3F2E8;">
+                <div class="modal-header" style="text-align:center; background-color:#ccc; height: 6vh;">
+                    <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:16px !important; color:#000;" id="modal-title">Edit Customer Details</h4>
+                </div>
+
+                <div class="modal-body" style="margin-top:30px; text-transform:none;">
+
+                    <div class="row" style="margin-bottom:20px;">
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Code</span>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Name</span>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-bottom:20px;">
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <input disabled="disabled" style="border:0; width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="sc.currentCustomer.Code" type="text" value="" />
+
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <input disabled="disabled" style="border:0; width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="sc.currentCustomer.Name" type="text" value="" />
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row" style="margin-top:30px;">
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Email</span>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Telephone</span>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <input style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="sc.currentCustomer.Email" type="text" value="" />
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <input style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="sc.currentCustomer.Telephone" type="text" value="" />
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:30px;">
+
+                        <div class="col-xs-12 col-sm-12" style="text-align:left;">
+                            <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">IBAN</span>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-12" style="text-align:left;">
+                            <input style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="sc.currentCustomer.IBAN" type="text" value="" />
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="margin-top:30px;">
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                            <button data-dismiss="modal" aria-hidden="true" style="height: 50px; width: 200px; border-radius: 25px; background-color: #e74c3c; border:0;" class="button-cancel btn btn-primary">&nbsp;&nbsp;Cancel</button>
+
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6" style="text-align:right;">
+                            <button ng-click="sc.saveCustomer()" style="height: 50px; width: 200px; border-radius: 25px; background-color: #00AF60; border:0;" class="button-save btn btn-primary">&nbsp;&nbsp;Save</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--NEW LAYOUT-->
+    <div class="row" style="background-color:#f4f4f4; height:90vh;">
+
+        <div class="row" style="margin:0; padding:10px; padding-right: 0px;">
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Select a Customer</span>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; margin-right: 20px; " ng->{{ sc.DocumentTypeObjName }} Creation</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin:0; padding:10px; margin-right:15px;">
+            <div class="col-xs-10 col-sm-10">
+                <input style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="sc.txtSearch" type="text" value="" placeholder="search customer" />
+            </div>
+            <div class="col-xs-2 col-sm-2" ">
+                <button ng-click="sc.txtSearch = ''; sc.idSelected=''; sc.resetSelection()" style="width: 115px; height: 5vh; background-color:#6aa7f1; border-radius:5vh; border:0;" class="btn btn-primary">Clear</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin:0; padding:10px; padding-right: 0px;" ng-show="sc.showIfDF()">
+            <div class="col-xs-12 col-sm-12">
+                <input style="margin-left:10px;transform: scale(2.5);" type="checkbox" ng-model="sc.noCustomer" ng-change="sc.noCustomerChange()" ng-disabled="sc.editAndNoCustomer" /><span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; font-weight: bold; padding-left:15px "> NO CUSTOMER</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin:0; padding:10px;">
+            <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0;  overflow:auto; height:67vh;">
+                <div style="" ng-repeat="customer in sc.customers | filter : sc.criteriaMatch(sc.txtSearch)">
+                    <div ng-class="{selectedCustomer: customer.Id === sc.idSelected}" class="col-xs-5 col-sm-5" style="width: 41vw;
+        border:2px solid #ccc; height: 20vh; margin-bottom:10px; margin-left:0px; margin-right:10px; background-color:#fff;" ng-click="sc.selectRow(customer)">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <span class="spanCustomerText" style="font-weight:bold;">{{customer.Name}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <span class="spanCustomerText" style="font-size: 12px; margin-top: -1.5vh;">{{customer.RegisteredName}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <img style="height: 18px;" src="images/location-icon.png" />
+                                        <span class="spanCustomerText" style="position: absolute; padding-left: 10px;font-size: 10px;">{{customer.Address1}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <img style="height: 18px;" src="images/phone-icon.png" />
+                                        <span class="spanCustomerText" style="position: absolute; padding-left: 10px;font-size: 10px;">{{(customer.Telephone == 'null' ? '' : customer.Telephone)}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <img style="height: 18px;" src="images/email-icon.png" />
+                                        <span class="spanCustomerText" style="position: absolute; padding-left: 10px;font-size: 10px;">{{(customer.Email == 'null' ? '' : customer.Email)}}</span>
+                                    </div>
+                                </div>
+                                <!--<div class="row" ng-click="sc.OpenModalEdit(customer)">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <button style="text-align:right; width: 100%; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;" class="btn btn-primary">Edit Customer</button>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+ 
+</div>
+
+
+<!--OLD LAYOUT -->
+<!--<div class="row" style="background-color:#F3F2E8; height:70vh;">
+        <div class="col-xs-12 col-sm-12" style="height: 80vh;margin: 0;">
+            <div class="row" style="background-color: #ccc; margin-top: 0;">
+                <div class="col-xs-12 col-sm-12" style="margin-top: 15px;">
+
+                    <img src="images/clnt-icon-sel.png" style="float:right;" />
+                    <span style="color:#0C4C93;display:block; margin-top: -5px; padding-bottom: 10px; color:rgba(0, 0, 0, 0.79); font-size:18px; font-family:'Open Sans'; text-transform:none;">Customer</span>
+                </div>
+            </div>
+
+            <div class="row" style="background-color:#ECEAE0; padding: 20px;">
+                <div class="col-xs-10 col-sm-10">
+                    <input style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="sc.txtSearch" type="text" value="" placeholder="search customer" />
+                </div>
+                <div class="col-xs-2 col-sm-2">
+                    <button ng-click="sc.txtSearch = ''; sc.idSelected=''; sc.resetSelection()" style="width: 115px; height: 5vh; background-color:#0d4c93; border-radius:5vh;" class="btn btn-primary">Clear</button>
+                </div>
+            </div>
+
+            <div class="row" style="margin-right:15px;height: 50vh; padding-left: 25px;">
+
+                <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0; overflow:auto; height:50vh;">
+
+                    <div style="" ng-repeat="customer in sc.customers | filter : sc.criteriaMatch(sc.txtSearch)">
+                        <div ng-class="{selectedCustomer: customer.Id === sc.idSelected}" class="col-xs-5 col-sm-5" style="width: 36vw;
+    margin-left: 0 !important;margin-right:20px !important; border:2px solid #ccc; margin:20px; height: 27.1vh;-webkit-box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);border-radius: 6px !important;">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12" style="padding:10px;" ng-click="sc.selectRow(customer)">
+                                    <p style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">
+                                        <span class="spanCustomerText" style="padding:10px; font-weight:bold;">{{customer.Name}}</span>
+                                        <br />
+                                        <span class="spanCustomerText" style="margin-top: -25px; padding:10px; font-size: 12px; ">{{customer.RegisteredName}}</span>
+                                    </p>
+
+                                    <p style="margin-top: -25px;color: #000; font-size: 12px; font-weight: normal;">
+                                        <img style="height: 20px;" src="images/location-icon.png" />
+                                        <span class="spanCustomerText" style="position: absolute; padding-left: 20px;">{{customer.Address1}}</span>
+                                        <br />
+                                        <span class="spanCustomerText" style="font-size: 10px; padding-left: 35px;margin-top: -10px; display: block;">{{customer.Region}}</span>
+                                    </p>
+
+                                    <p style="color: #000; font-size: 12px; font-weight: normal;">
+                                        <img style="height: 20px;" src="images/phone-icon.png" /><span style="position: absolute; padding-left: 12px;">{{customer.Telephone}}</span></p>
+                                    <p style="color: #000; font-size: 12px; font-weight: normal;">
+                                        <img style="height: 20px;" src="images/email-icon.png" /><span style="position: absolute; padding-left: 12px;">{{customer.Email}}</span>
+                                    </p>
+
+                                </div>
+                            </div>
+
+                            <div class="row" style="position: absolute; bottom: 20px; width: 100%;">
+                                <div class="col-xs-12 col-sm-12" style="padding-left: 0px; padding-right: 0; margin-top:-10px;">
+                                    <p style="width:100%; height:20px;">
+                                        <button ng-click="sc.OpenModalEdit(customer)" style="width: 100%; height: 5vh; background-color:#4B9FC6; border:0;" class="btn btn-primary">Edit Customer</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="row" style="width:100%; background-color:#F3F2E8; position:absolute; bottom:0; padding-bottom: 10px;">
+        <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 25px;">
+            <input ng-click="sc.selectPrevStep()" value="Previous" style="height: 50px; width: 200px; border-radius: 25px; background-color: #0d4c93; border:0;" class="button-prev btn btn-primary" type="button">
+        </div>
+        <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 25px;">
+            <input ng-hide="sc.idSelected == ''" ng-click="sc.selectNextStep()" value="Next" style="height: 50px; width: 200px; border-radius: 25px; background-color: #0d4c93; border:0;" class="button-next btn btn-primary" type="button">
+        </div>
+    </div>
+</div>-->

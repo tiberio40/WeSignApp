@@ -1,0 +1,221 @@
+<!--NEW LAYOUT-->
+<div id="bodyController" ng-controller="BodyController as bc" style="background-color:#F3F2E8; ">
+    <div class="row" style="background-color:#f4f4f4; height:89.5vh;">
+        
+        <div class="row" style="margin:0; padding:10px;">
+            <div id="divBody" class="col-xs-12 col-sm-12 scroll-wrapper" style="position:relative; margin: 0;  height:80vh; background-color:#fff;">
+                <iframe id="bodyDiv" style="width:87vw; height:80vh;" />
+                <!--src="document/module/iframe.html"-->
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12" style="background-color:#fff !important; position:relative; margin: 0; overflow-y:auto;">
+            <div>
+                <div id="modalImageSize" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" style="background-color: #fff; border-radius: 2vh;">
+                            <div class="modal-header" style="text-align:center; background-color:#ccc; height: 8vh;">
+                                <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:18px !important; color:#000;" id="modal-title">Image Size</h4>
+                            </div>
+                            
+                            <div class="modal-body">
+                                
+                                <div class="row" style="">
+                                    <div class="col-xs-12 col-sm-12" style="">
+                                        <label style="font-size:14px; font-weight:bold;">Set image size in percentage</label>
+                                        <br />
+                                        <label style="margin-bottom:10px; margin-top: 10px; font-size:12px;">(Value between 1% and 100%)</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12" style="">
+                                        <input type="number" class="form-control" id="inputImageSize" value="50" min="1" max="100">
+                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-6" style="text-align:right;">
+                                        <div ng-click="bc.SetImageSize();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Set Size</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                                        <div ng-click="bc.CancelImageSize();$dismiss();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Close</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="modalCustomerSignature" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" style="background-color: #fff; border-radius: 2vh;">
+                            <div class="modal-header" style="text-align:center; background-color:#ccc; height: 8vh;">
+                                <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:18px !important; color:#000;" id="modal-title">Signature - {{ bc.whoIsSignatured }}</h4>
+                            </div>
+                            
+                            <div class="modal-body">
+                                
+                                <div class="row" style="width:800px; height:200px;">
+                                    <div class="col-xs-12 col-sm-12" style="width:800px; height:200px;">
+                                        <canvas id="signature-pad" class="signature-pad" style="border: 1px solid #000;" width=800 height=200></canvas>
+                                    </div>
+                                </div>
+                                <style>
+                                    .disablePointerEvents {
+                                        pointer-events: none;
+                                    }
+                                </style>
+                                <div class="row">
+                                    <div class="col-xs-4 col-sm-4" style="text-align:right;">
+                                        <div ng-class="{true:'disablePointerEvents'}[bc.SaveSignatureEnabled == false]" ng-disabled="!bc.SaveSignatureEnabled" ng-click="bc.SaveSignature();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Save Signature</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4" style="text-align:left;">
+                                        <div ng-click="bc.ClearSignature();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Clear Signature</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4" style="text-align:left;">
+                                        <div ng-click="bc.CloseSignature();$dismiss();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Close</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="modalSignatureType" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" style="background-color: #fff; border-radius: 2vh;">
+                            <div class="modal-header" style="text-align:center; background-color:#ccc; height: 8vh;">
+                                <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:18px !important; color:#000;" id="modal-title">Select Signature Type</h4>
+                            </div>
+                            
+                            <div class="modal-body">
+                                <style>
+                                    .disablePointerEvents {
+                                        pointer-events: none;
+                                    }
+                                </style>
+                                <div class="row">
+                                    <div class="col-xs-4 col-sm-4" style="text-align:right;">
+                                        <div ng-click="bc.CloseSignatureTypeModal();bc.OpenCustomerSignatureModal();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">iPad Signature</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4" style="text-align:left;">
+                                        <div ng-click="bc.resendEmailRemote();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Remote Signature</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4" style="text-align:left;">
+                                        <div ng-click="bc.CloseSignatureTypeModal();$dismiss();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Close</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="modalAgreementSendMailRemote" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" style="background-color: #F3F2E8; border-radius: 2vh;">
+                            <div class="modal-header" style="text-align:center; background-color:#ccc; height: 6vh;">
+                                <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:16px !important; color:#000;" id="modal-title">Email Remote Signature - {{ bc.whoIsSignatured }}</h4>
+                            </div>
+                            
+                            <div class="modal-body" style="margin-top:30px; text-transform:none;">
+                                
+                                <div class="row">
+                                    
+                                    <div class="col-md-12">
+                                        <form data-toggle="validator" role="form" id="formSendEmail">
+                                            <div class="row form-group" style="margin-bottom:10px;">
+                                                <div class="col-md-2" style="text-align:right;">
+                                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">To:</span>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <input id="modal-SendMailto-template-remote" class="ng-pristine ng-empty ng-touched" style="width:100%" type="text" placeholder="Insert Email" />
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12" style="text-align:right;">
+                                        <div ng-click="bc.CompleteSendEmailRemote()" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 15vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Resend</span>
+                                        </div>
+                                        <div ng-click="bc.closemodal('#modalAgreementSendMailRemote')" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 15vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Close</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="">
+        <div class="col-xs-12 col-sm-12" style="background-color:#fff !important; position:relative; margin: 0; overflow-y:auto;">
+            
+            <div>
+                
+                <div id="modalValidation" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" style="background-color: #fff; border-radius: 2vh;">
+                            <div class="modal-header" style="text-align:center; background-color:#ccc; height: 8vh;">
+                                <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:18px !important; color:#000;" id="modal-title">These Fields are not Valid:</h4>
+                            </div>
+                            
+                            <div class="modal-body">
+                                
+                                <div class="row" style="width:800px; height:500px; overflow:auto;">
+                                    <div class="col-xs-12 col-sm-12" style="width:800px; height:600px;">
+                                        <p ng-bind-html="bc.trustAsHtml(bc.validationMessage)"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-2 col-sm-3" style="text-align:left;"></div>
+                                    <div class="col-xs-4 col-sm-3" style="text-align:left;">
+                                        <div ng-click="bc.closeModelValidation(true);" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Go to Fields</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-3" style="text-align:left;">
+                                        <div ng-click="bc.closeModelValidation(false);" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 5vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                            <span style="">Close</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-3" style="text-align:left;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,370 @@
+<div id="wrapper" class="fullscreen" style="height:100vh; width:100vw;">
+	<style>
+		.fullscreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			overflow: auto;
+			background: white;
+		}
+	</style>
+	<input 
+		ng-if="vm.showChangeUser"
+		value="Change User"
+		style="width: 120px;height: 40px;border-radius:25px;background-color: #c9302c;color:#fff;border: #c9302c93;font-weight: normal;font-size: 14px;top: 30px;right: 20px;position:  absolute;"
+		class="btn btn-danger ng-scope" type="button" ng-click="vm.DEBUG_changeUser()">
+
+
+	<div ng-show="vm.syncStarted || vm.synFinished" style="height:100vh;">
+		<div class="row" style="text-align: center;font-weight: bold; font-size: 20px; margin-top:80px;">
+			<div class="col-md-12">
+				<img style="display:none" src="images/philip-morris-logo-small.png" />
+				<div class="row" style="text-align:center; font-size:14px;; margin-bottom:10px;">
+					<div class="col-xs-12 col-sm-12">
+						<span style="color:#0d4c93; font-family:'Open Sans';">Loading</span>
+					</div>
+				</div>
+
+				<div class="progress" style="margin-left: 75px; margin-right: 75px; margin-top:0;">
+					<div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+						aria-valuemax="100" style="width: 0%;">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="text-align: center;font-weight: normal; font-size: 16px;">
+
+			<div class="col-md-12">
+				<div ng-show="!vm.synFinished" style="height:79px;padding-top: 25px;">
+					<span style="color:#0d4c93; font-family:'Open Sans';">Performing initial synchronization, please
+						wait...</span>
+				</div>
+				<div ng-show="vm.synFinished">
+					<div>
+						<span
+							style="color:#0d4c93; font-family:'Open Sans';text-align: center;font-weight: normal; font-size: 16px; margin-top:10px;">Synchronization
+							Finished</span>
+					</div>
+					<div style="text-align:center; margin-top:5px;">
+						<button
+							style="width: 200px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-family: 'Open Sans'; font-weight: bold; font-size: 20px;"
+							class="btn btn-primary" ng-click="vm.navigateTo('/home');">Launch App</button>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1">
+				<div class="initSyncMessages header">
+					<span class="header">Download Details</span>
+				</div>
+			</div>
+
+			<div class="col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-3">
+				<div class="initSyncMessages header">
+					<span>Import Details</span>
+				</div>
+			</div>
+
+			<div class="col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1">
+				<div class="initSyncMessages" ng-repeat='getMessage in vm.getMessageArray'>
+					<span
+						ng-class="{ok : getMessage.value === 'OK', warning : getMessage.value === 'WNG', error : getMessage.value === 'ERROR'}">{{getMessage.message}}</span>
+				</div>
+			</div>
+			<div class="col-sm-1 col-md-1">
+				<div class="initSyncMessages" ng-repeat='getMessage in vm.getMessageArray'>
+					<span ng-if="getMessage.value == 'Pending'" class="pending">{{getMessage.value}}</span>
+					<span
+						ng-if="getMessage.value != 'OK' && getMessage.value != 'WNG' && getMessage.value != 'ERROR' && getMessage.value != 'Pending'"
+						class="loadValues">{{getMessage.value}}</span>
+					<img ng-if="getMessage.value == 'OK'" src="images/checkico.png"
+						style="max-width:15px; padding-top:5px;" />
+					<img ng-if="getMessage.value == 'WNG'" src="images/warningico.png"
+						style="max-width:15px; padding-top:5px;" />
+					<img ng-if="getMessage.value == 'ERROR'" src="images/delico.png"
+						style="max-width:15px; padding-top:5px;" />
+				</div>
+			</div>
+
+			<div class="col-sm-4 col-md-3 col-md-offset-2">
+				<div class="initSyncMessages" ng-repeat='importMessage in vm.importMessageArray'>
+					<span
+						ng-class="{ok : importMessage.value === 'OK', warning : importMessage.value === 'WNG', error : importMessage.value === 'ERROR'}">{{importMessage.message}}</span>
+				</div>
+			</div>
+			<div class="col-sm-1 col-md-1">
+				<div class="initSyncMessages" ng-repeat='importMessage in vm.importMessageArray'>
+					<span
+						ng-if="importMessage.value != 'OK' && importMessage.value != 'WNG' && importMessage.value != 'ERROR'"
+						class="pending">{{importMessage.value}}</span>
+					<img ng-if="importMessage.value == 'OK'" src="images/checkico.png"
+						style="max-width:15px; padding-top:5px;" />
+					<img ng-if="importMessage.value == 'WNG'" src="images/warningico.png"
+						style="max-width:15px; padding-top:5px;" />
+					<img ng-if="importMessage.value == 'ERROR'" src="images/delico.png"
+						style="max-width:15px; padding-top:5px;" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="text-align:center; margin-top: 50px;">
+			<div class="col-md-6" style="margin-top: -20px;">
+				<button style="width: 115px; height: 50px;" class="btn btn-primary" ng-show="vm.syncFinished"
+					ng-click="vm.navigateTo('/')">OK</button>
+			</div>
+			<div class="col-md-6" style="margin-top: -20px;">
+				<button style="width: 115px; height: 50px;" class="btn btn-primary" ng-show="vm.syncFinished"
+					ng-click="vm.ShowDetails()">Show Details</button>
+			</div>
+		</div>
+	</div>
+	<div ng-show="vm.loginShow">
+		<div class="row" style="margin-top:50px;">
+			<div class="col-xs-12 col-sm-12" style="text-align:left; margin-top:20px;">
+				<div class="row">
+					<div class="col-xs-6 col-sm-6" style="text-align:right;">
+						<img src="images/weSign-logo.png" style="width:100px;" />
+					</div>
+					<div class="col-xs-6 col-sm-6" style="margin-top:20px; text-align:left;">
+						<span class="loginSpanBlueSmall" style="font-size:26px;">WeSign</span>
+						<br />
+						<span class="loginSpanBlueSmall">Version {{version}}</span>
+						<br />
+						<span class="loginSpanBlueSmall">Environment {{environment}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-switch="vm.userOptionView">
+			<div ng-switch-when="main">
+				<div class="row">
+					<div class="row" style="margin-top:40px;">
+						<div class="col-xs-12 col-sm-12" style="text-align:center;">
+							<span class="loginSpanBlueMed">Select a sign in option</span>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-top:30px;">
+					<div class="col-xs-12 col-sm-12" style="text-align:center;">
+						<input value="PMI account"
+							style="width: 265px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-weight: normal; font-size: 16px;"
+							class="btn btn-primary" type="button" ng-click="vm.openSSO()" tabindex="3">
+					</div>
+				</div>
+				<div class="row">
+					<div class="row" style="margin-top:40px;">
+						<div class="col-xs-12 col-sm-12" style="text-align:center;">
+							<span class="loginSpanBlueMed">Or</span>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-top:30px;">
+					<div class="col-xs-12 col-sm-12" style="text-align:center;">
+						<input value="Sign in with user and password"
+							style="width: 262px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-weight: normal; font-size: 16px;"
+							class="btn btn-primary" type="button" ng-click="vm.userOptionView = 'login-classic'"
+							tabindex="3">
+					</div>
+				</div>
+			</div>
+			<div ng-switch-when="sso">
+				<div class="row" style="margin-top:10%;">
+					<div class="col-xs-12 col-sm-12" style="text-align:center; margin-left:-15px;">
+
+						<select id="rolesDrop"
+							style="margin-left: 30px; margin-top: 30px; max-width:400px; display:inline;height: 50px; border-radius: 25px; color:white; border:0;"
+							class="form-control btn-cmt btn-cmt-primary dropdown-toggle" ng-model="vm.selectedRole"
+							ng-change="vm.setRole()">
+							<option value="">Select a Domain/Role</option>
+							<option ng-repeat="item in vm.rolesSSOList" value="{{ item.codeId }}">{{ item.market }} - {{
+								item.codeName }}</option>
+						</select>
+						<span ng-show="form.selectedMarket.$dirty && form.selectedMarket.$error.required"
+							class="help-block">Domain/Role is required</span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12" style="text-align:center;">
+					<img ng-if="vm.dataLoading" src="images/loading.gif" style="max-width:50px;" />
+				</div>
+				<div class="row" style="margin-top:30px;">
+					<div class="col-xs-12 col-sm-12" style="text-align:center;">
+						<input value="Login" ng-disabled="vm.dataLoading"
+							style="width: 200px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-weight: normal; font-size: 16px;"
+							class="btn btn-primary" type="button" ng-click="vm.loginBySSO()" tabindex="3">
+					</div>
+				</div>
+
+				<div class="row" style="margin-top:30px;">
+					<div class="col-xs-12 col-sm-12" style="text-align:center;">
+						<input value="Sign Out" ng-disabled="vm.dataLoading"
+							style="width: 200px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-weight: normal; font-size: 16px;"
+							class="btn btn-primary" type="button" ng-click="vm.logOutSSO()" tabindex="3">
+					</div>
+				</div>
+
+			</div>
+			<div ng-switch-when="login-classic">
+				<div ng-show="vm.RecoverPasswordScreen == false">
+					<div class="row" style="margin-top:40px;">
+						<div class="col-xs-12 col-sm-12" style="text-align:center;">
+							<span class="loginSpanBlueMed">Login</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row" style="margin-top:20px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<span class="loginSpanBlueMed" style="font-weight:normal;">User</span>
+							</div>
+						</div>
+						<div class="row" style="margin-top:5px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<input ng-disabled="vm.usernameDisable" ng-model="vm.username"
+									style="max-width:400px; display:inline; background-color: #ccc; height: 50px; border-radius: 25px;box-shadow: inset -2px 9px 15px -2px #DBD8D3;"
+									class="form-control" type="text" name="username" placeholder="Username" tabindex="1"
+									value="Username"><br>
+								<span ng-show="form.username.$dirty && form.username.$error.required"
+									class="help-block">Username is required</span>
+							</div>
+						</div>
+						<div ng-show="vm.roleSelected != null && vm.isSSO == 1" class="row" style="margin-top:15px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<input disabled ng-model="vm.roleSelected.codeName"
+									style="max-width:400px; display:inline; background-color: #ccc; height: 50px; border-radius: 25px;box-shadow: inset -2px 9px 15px -2px #DBD8D3;"
+									class="form-control" type="text" name="username" placeholder="Username" tabindex="1"
+									value="codeName"><br>
+							</div>
+						</div>
+						<div class="row" ng-show="vm.isSSO == 0" style="margin-top:10px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<span class="loginSpanBlueMed" style="font-weight:normal;">Password</span>
+							</div>
+						</div>
+						<div class="row" ng-show="vm.isSSO == 0">
+							<div class="col-xs-12 col-sm-12" style="text-align:center; ">
+								<input type="password" ng-model="vm.password"
+									style="max-width:400px; display:inline; background-color: #ccc; height: 50px; border-radius: 25px; box-shadow: inset -2px 9px 15px -2px #DBD8D3"
+									class="form-control" type="text" name="password" placeholder="Password" tabindex="1"
+									value="Password"><br>
+								<span ng-show="form.password.$dirty && form.password.$error.required"
+									class="help-block">Password is required</span>
+							</div>
+						</div>
+						<div class="row" ng-show="vm.isSSO == 0" style="margin-top:10px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;" ng-click="vm.resetPassword()">
+								<span class="loginSpanBlueMed"
+									style="font-family: 'Open Sans';color: #656565;font-size: 14px;font-weight: normal;">
+									Forgot Password?
+								</span>
+							</div>
+						</div>
+						<div class="row" ng-show="vm.isSSO == 0">
+							<div class="col-xs-12 col-sm-12" style="text-align:center; margin-left:-15px;">
+								<select id="marketDrop" ng-disabled="vm.loginDisable"
+									style="margin-left: 30px; margin-top: 30px; max-width:400px; display:inline;height: 50px; border-radius: 25px; color:white; border:0;"
+									class="form-control btn-cmt btn-cmt-primary dropdown-toggle"
+									ng-model="vm.selectedMarket">
+									<option value="">Select a Market</option>
+									<option ng-repeat="item in vm.markets" value="{{ item.Id }}">{{ item.Name }}
+									</option>
+								</select>
+								<span ng-show="form.selectedMarket.$dirty && form.selectedMarket.$error.required"
+									class="help-block">Market is required</span>
+							</div>
+						</div>
+						<div class="row" style="margin-top:15px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<input value="Login" ng-show="vm.isSSO == 0"
+									ng-disabled="vm.password=='' || vm.username=='' || vm.selectedMarket==undefined || vm.selectedMarket==null"
+									style="width: 200px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-weight: normal; font-size: 16px;"
+									class="btn btn-primary" type="button" ng-click="vm.login()" tabindex="3">
+								<input value="PMI account" ng-disabled="vm.dataLoading == true" ng-show="vm.isSSO == 1"
+									style="width: 200px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-weight: normal; font-size: 16px;"
+									class="btn btn-primary" type="button" ng-click="vm.login()" tabindex="3">
+							</div>
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<img ng-if="vm.dataLoading" src="images/loading.gif" style="max-width:50px;" />
+							</div>
+						</div>
+						<div ng-show="!vm.usernameDisable" class="row">
+							<div class="row" style="margin-top:20px;">
+								<div class="col-xs-12 col-sm-12" style="text-align:center;">
+									<span class="loginSpanBlueMed">Or</span>
+								</div>
+							</div>
+						</div>
+						<div ng-show="!vm.usernameDisable" class="row" style="margin-top:15px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<input value="Sign in with SSO"
+									style="width: 200px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-weight: normal; font-size: 16px;"
+									class="btn btn-primary" type="button" ng-click="vm.userOptionView = 'main'"
+									tabindex="3">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div ng-show="vm.RecoverPasswordScreen == true">
+					<div class="form-group">
+						<div class="row" style="margin-top:133px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<span class="loginSpanBlueMed" style="font-weight:bold;">Please insert your registered
+									e-mail</span>
+							</div>
+						</div>
+						<div class="row" style="margin-top:45px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center; ">
+								<input type="E-mail" ng-model="vm.recoveryEmail"
+									style="max-width:400px; display:inline; background-color: #ccc; height: 50px; border-radius: 25px; box-shadow: inset -2px 9px 15px -2px #DBD8D3"
+									class="form-control" type="text" name="password" placeholder="Password" tabindex="1"
+									value=""><br>
+								<span ng-show="form.password.$dirty && form.password.$error.required"
+									class="help-block">Password is required</span>
+							</div>
+						</div>
+						<div class="row" style="margin-top:10px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;"
+								ng-click="vm.cancelResetPassword()">
+								<span class="loginSpanBlueMed"
+									style="font-family: 'Open Sans';color: #656565;font-size: 14px;font-weight: normal;">Cancel
+									recovery e-mail</span>
+							</div>
+						</div>
+						<div class="row" style="margin-top:5px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center; margin-left:-15px;">
+								<select id="marketDrop" ng-disabled="vm.loginDisable"
+									style="margin-left: 30px; margin-top: 30px; max-width:400px; display:inline;height: 50px; border-radius: 25px; color:white; border:0;"
+									class="form-control btn-cmt btn-cmt-primary dropdown-toggle"
+									ng-model="vm.selectedMarket"
+									-options="item.Name for item in vm.markets track by item.Name">
+									<option value="">Select a Market</option>
+								</select>
+								<span ng-show="form.selectedMarket.$dirty && form.selectedMarket.$error.required"
+									class="help-block">Market is required</span>
+							</div>
+						</div>
+						<div class="row" style="margin-top:30px;">
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<input value="Send e-mail"
+									ng-disabled="vm.recoveryEmail=='' || vm.selectedMarket==undefined || vm.selectedMarket==null"
+									style="width: 200px; height: 50px; border-radius:25px; background-color: #0d4c93; color:#fff; border: 3px solid #0d4c93; font-weight: normal; font-size: 16px;"
+									class="btn btn-primary" type="button" ng-click="vm.sendRecoveryMail()" tabindex="3">
+							</div>
+							<div class="col-xs-12 col-sm-12" style="text-align:center;">
+								<img ng-if="vm.dataLoading" src="images/loading.gif" style="max-width:50px;" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-switch-when="loading-info" class="ng-scope">
+				<div class="text-center" style="/* margin-bottom: 15px; */ margin-top: 16%;">
+					<h3 style="margin-bottom: 15px; color: #0d4c93;">Loading Information</h3>
+					<img style="width: 50px;" src="images/progress2.gif" alt="">
+				</div>
+			</div>
+		</div>
+	</div>

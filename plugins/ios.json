@@ -1,0 +1,33 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-custom-config": {
+      "PACKAGE_NAME": "CMTALT"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "CMTALT"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "CMTALT"
+    },
+    "cordova-plugin-printer": {
+      "PACKAGE_NAME": "CMTALT"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "CMTALT"
+    },
+    "cordova-plugin-wkwebview-file-xhr": {
+      "PACKAGE_NAME": "CMTALT"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "CMTALT"
+    }
+  },
+  "dependent_plugins": {}
+}

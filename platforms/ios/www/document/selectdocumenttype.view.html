@@ -1,0 +1,91 @@
+﻿<div id="content" ng-controller="SelectDocumentTypeController as sdc" style="background-color:#f4f4f4; height:90vh;">
+
+    <div class="row" style="width: 100vw;">
+        <div class="col-xs-12 col-sm-12">
+            <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; padding: 20px;">Please Select a Document Type</span>
+        </div>
+    </div>
+    <div class="document-selection-wrapper" style="margin: -20px; width: 100vw;">
+        <div class="document-selection">
+            <div class="row" style="height:13vh;" ng-repeat="documenttype in sdc.documentTypes track by $index" ng-click="sdc.select(documenttype.Id)">
+                <div class="col-xs-12 col-sm-12  option {{ sdc.selectedDocumentType == documenttype.Id ? 'active-selection' : '' }}" style="background-color:#fff; border:2px solid #ccc; height: 13vh; margin-left: 35px; margin-bottom:10px; width: 94vw;">
+
+                    <div class="row" style="height:13vh;margin-top:-15px;">
+                        <div class="col-xs-1 col-sm-1" style="margin-left: -1px; margin-top: -6px; height:13vh; width:4vw; background-color:#6aa7f1; border:2px solid #6aa7f1;">
+                        </div>
+                        <div class="col-xs-2 col-sm-2" style="height:13vh; margin-top: 10px;">
+                            <div>
+                                <div>
+                                    <span ng-attr-id="{{ 'option-' + documenttype.DocumentLabelCode + (sdc.selectedDocumentType == documenttype.Id ? '-selection': '') }}"></span>
+                                </div>
+                                <div>
+                                    <p class="option-description {{sdc.selectedDocumentType == documenttype.Id ? 'text-selection': ''}}">{{documenttype.Name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-9 col-sm-9" style="padding:10px;">
+                            <p style="color: #000; font-size:12px; font-weight:bold;" class="{{sdc.selectedDocumentType == documenttype.Id ? 'text-selection': ''}}">{{documenttype.Description}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="row" style="height:7vh; width: 97vw; margin-left: 5px; position: absolute; bottom: 6px;">
+        <div class="col-xs-6 col-sm-6" style="text-align:left;">
+            <input ng-click="sdc.Cancel()" value="Cancel" type="button" style="height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-cancel btn btn-primary" />
+        </div>
+
+        <div class="col-xs-6 col-sm-6" style="text-align:right;">
+            <input ng-click="sdc.selectNextStep()" value="Next" type="button" style="height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-next btn btn-primary" />
+        </div>
+    </div>
+</div>
+
+<!--OLD LAYOUT-->
+<!--<div id="content" ng-controller="SelectDocumentTypeController as sdc" style="background-color:#ccc; height:80vh;">
+    <div class="row" style="width: 100%; margin: 0;">
+        <div class="col-xs-12 col-sm-12">
+            <div class="document-selection-wrapper">
+                <div class="document-selection">
+                    <div ng-repeat="documenttype in sdc.documentTypes track by $index">
+                        <div class="option {{ sdc.selectedDocumentType == documenttype.Id ? 'active-selection' : '' }}" ng-click="sdc.select(documenttype.Id)">
+                            <div class="row" style="padding:5px;">
+                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xlg-3">
+                                    <div>
+                                        <div>
+                                            <span ng-attr-id="{{ 'option-' + documenttype.DocumentLabelCode + (sdc.selectedDocumentType == documenttype.Id ? '-selection': '') }}"></span>
+                                        </div>
+                                        <div>
+                                            <p class="option-description {{sdc.selectedDocumentType == documenttype.Id ? 'text-selection': ''}}">{{documenttype.Name}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xlg-7">
+                                    <p style="color: #0B3F7A; " class="{{sdc.selectedDocumentType == documenttype.Id ? 'text-selection': ''}}">{{documenttype.Description}}</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xlg-2 checkbox">
+                                    <input ng-checked="sdc.selectedDocumentType == documenttype.Id" type="checkbox" class="document-type" ng-model="sdc.selectedDocumentType" ng-true-value="{{documenttype.Id}}" name="documentType">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="width: 100%; margin: 0;">
+        <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 25px;">
+            <input ng-click="sdc.navigateTo2('/')" value="Cancel" type="button" style="height: 50px; width: 200px; border-radius: 25px; background-color: #e74c3c; border:0;" class="button-cancel btn btn-primary" />
+        </div>
+        <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 25px;">
+            <input ng-click="sdc.selectNextStep()" value="next" type="button" style="height: 50px; width: 200px; border-radius: 25px; background-color: #00AF60; border:0;" class="button-next btn btn-primary" />
+        </div>
+    </div>
+
+</div>-->

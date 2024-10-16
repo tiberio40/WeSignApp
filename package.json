@@ -1,0 +1,41 @@
+{
+  "name": "io.cordova.hellocordova",
+  "displayName": "HelloCordova",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "cordova": {
+    "platforms": [
+      "ios"
+    ],
+    "plugins": {
+      "cordova-custom-config": {},
+      "cordova-plugin-wkwebview-file-xhr": {},
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-printer": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-camera": {}
+    }
+  },
+  "devDependencies": {
+    "cordova-custom-config": "^5.1.1",
+    "cordova-ios": "^7.1.0",
+    "cordova-plugin-inappbrowser": "^6.0.0",
+    "cordova-plugin-printer": "^0.8.0",
+    "cordova-plugin-splashscreen": "^6.0.2",
+    "cordova-plugin-wkwebview-file-xhr": "^3.1.1",
+    "cordova-sqlite-storage": "^6.1.0"
+  },
+  "dependencies": {
+    "cordova-plugin-camera": "^7.0.0"
+  }
+}

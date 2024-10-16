@@ -1,0 +1,132 @@
+﻿<!--NEW LAYOUT-->
+<div ng-controller="BudgetAccountController as bac" style="background-color:#F3F2E8; ">
+
+    <div class="row" style="background-color:#f4f4f4; height:90vh;">
+        <div class="row" style="margin:0; padding:10px; padding-right: 0px;">
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Select a Budget Account</span>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; margin-right: 20px; " ng->{{ bac.DocumentTypeObjName }} Creation</span>
+            </div>
+        </div>
+        <div class="row" style="margin:0; padding:10px;">
+            <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0;  overflow:auto; height:67vh;">
+                <div style="" ng-repeat="budget in bac.documentBudgets track by $index">
+                    <div ng-class="{selectedCustomer: budget.Name === bac.idSelected}" class="col-xs-12 col-sm-12" style="width: 87vw;
+        border:2px solid #ccc; height: 6vh; margin-bottom:20px; margin-left:0px; margin-right:10px; background-color:#fff;"  ng-click="bac.selectRow(budget)">
+
+                        <div class="row" ng-click="budget.Selected = !budget.Selected">
+                            <div class="col-xs-1 col-sm-1" style="margin-left: -1px; margin-top: -2px; height:6vh; width:3vw; background-color:#6aa7f1; border:2px solid #6aa7f1;">
+                            </div>
+                            <div class="col-xs-11 col-sm-11" style="padding:10px;">
+                               <span class="spanCustomerText" style="font-weight:bold;">{{budget.Name}}</span> 
+                                <!--<div class="row">
+                                    <div class="col-xs-3 col-sm-3" style="margin:0; width:20vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Start Date</span>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3" style="margin:0; width:20vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">End Date</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:10vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Weight</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:16vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Period Duration</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:14vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Period Total</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-3" style="margin:0; width:20vw;">
+                                        <input ng-change="pc.changedDate($index, 'start')" type="date" ng-click="pc.showDate($index, 'start'); $event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].StartDate.Editable}" ng-readonly="!pc.periods[$index].StartDate.Editable" ng-model="period.StartDate " style="width:90%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" value="" />
+                                        <span ng-class="{'hideDiv': pc.periods[$index].StartDate.Editable}" ng-readonly="!pc.periods[$index].StartDate.Editable" ng-model="period.StartDate" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.StartDate}}</span>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3" style="margin:0; width:20vw;">
+                                        <input ng-change="pc.changedDate($index, 'start')" type="date" ng-click="pc.showDate($index, 'end');$event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].EndDate.Editable}" ng-readonly="!pc.periods[$index].EndDate.Editable" ng-model="period.EndDate" style="width:90%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" value="" />
+                                        <span ng-class="{'hideDiv': pc.periods[$index].EndDate.Editable}" ng-readonly="!pc.periods[$index].EndDate.Editable" ng-model="period.EndDate" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.EndDate}}</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:10vw;">
+                                        <input ng-click="$event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].Weight.Editable}" ng-readonly="!pc.periods[$index].Weight.Editable" ng-model="period.Weight" style="width:100%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" type="text" value="" />
+                                        <span ng-class="{'hideDiv': pc.periods[$index].Weight.Editable}" ng-readonly="!pc.periods[$index].Weight.Editable" ng-model="period.Weight" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.Weight}}</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:16vw;">
+                                        <span style="width:100%; height:35px; line-height:35px; margin-left:0px;">{{pc.periodsCalculations[$index].PeriodDuration}}</span>
+
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:14vw;">
+                                        <span style="width:100%; height:35px; line-height:35px; margin-left:0px;">{{pc.periodsCalculations[$index].PeriodTotal}}</span>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="row" style="height:7vh; width: 92vw; position: absolute; bottom: 0;">
+            <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 25px;">
+                <input ng-click="bac.selectPrevStep()" value="Previous" style="text-align:left; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-prev btn btn-primary" type="button">
+            </div>
+            <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 25px;">
+                <input ng-click="bac.selectNextStep()" value="Next" style="text-align:right; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-next btn btn-primary" type="button">
+            </div>
+        </div>-->
+    </div>
+
+
+</div>
+<!--OLD LAYOUT-->
+<!--<div>
+
+    <div class="row" style="background-color:#F3F2E8; height:70vh;">
+        <div class="col-xs-12 col-sm-12" style="height: 80vh;margin: 0;">
+            <div class="row" style="background-color: #ccc; margin-top: 0;">
+                <div class="col-xs-12 col-sm-12" style="margin-top: 15px;">
+                    <img src="images/bdy-icon-sel.png" style="float:right;" />
+                    <span style="color:#0C4C93;display:block; margin-top: -5px; padding-bottom: 10px; color:rgba(0, 0, 0, 0.79); font-size:18px; font-family:'Open Sans'; text-transform:none;">Body</span>
+                </div>
+            </div>
+
+            <div class="row" style="height: 50vh;">
+                <div class="col-xs-12 col-sm-12" style="background-color:#fff !important; position:relative; margin: 0; overflow-y:auto; height:69vh;">
+
+                    <div ng-controller="BodyController as bc">
+
+                        <div id="modalCustomerSignature" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content" style="background-color: #fff; border-radius: 2vh;">
+                                    <div class="modal-header" style="text-align:center; background-color:#ccc; height: 8vh;">
+                                        <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:18px !important; color:#000;" id="modal-title">Customer Signature</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div>
+                                            <div>
+                                                <div id="signature"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+</div>-->

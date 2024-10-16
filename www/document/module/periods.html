@@ -1,0 +1,203 @@
+<!--NEW LAYOUT-->
+<div ng-controller="PeriodController as pc" style="background-color:#f4f4f4; ">
+    <div class="row" style="background-color:#f4f4f4; height:90vh;">
+        <div class="row" style="margin:0; padding:10px; padding-right: 0px;">
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Validate the Periods</span>
+            </div>
+            <div class="col-xs-4 col-sm-4">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; margin-right: 20px; " ng->{{ pc.DocumentTypeObjName }} Creation</span>
+            </div>
+            <div class="col-xs-2 col-sm-2">
+                <button ng-show="pc.arePeriodsEditable" ng-click="pc.addNewPeriod()" style="width: 115px; height: 5vh; background-color:#6aa7f1; border-radius:5vh; border:0;" class="btn btn-primary">Add Period</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin:0; padding:10px;">
+            <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0;  overflow-y:auto; overflow-x:hidden; height:75vh;">
+                <div style="" ng-repeat="period in pc.documentPeriods track by $index">
+                    <div class="col-xs-12 col-sm-12" style="width: 87vw;
+        border:2px solid #ccc; height: 12vh; margin-bottom:20px; margin-left:0px; margin-right:10px; background-color:#fff;">
+
+                        <div class="row" ng-click="pc.select(period)">
+                            <div class="col-xs-1 col-sm-1" style="margin-left: -1px; margin-top: -2px; height:12vh; width:3vw; background-color:#6aa7f1; border:2px solid #6aa7f1;">
+                            </div>
+                            <div class="col-xs-10 col-sm-10" style="padding:10px;width: 83vw;">
+                                <div class="row" style="margin:0;">
+                                    <div class="col-xs-3 col-sm-3" style="margin:0; width:20vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Start Date</span>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3" style="margin:0; width:20vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">End Date</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:10vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Weight</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:16vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Period Duration</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:14vw;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Period Total</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row" style="margin:0;">
+                                    <div class="col-xs-3 col-sm-3" style="margin:0; width:20vw;">
+                                        <input ng-change="pc.changedDate($index, 'start')" type="date" ng-click="pc.showDate($index, 'start'); $event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].StartDate.Editable, 'invalidInput': pc.validateStartDates($index)}" ng-disabled="!pc.periods[$index].StartDate.Editable" ng-model="period.StartDate " style="width:90%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" value="" />
+                                        <span ng-class="{'hideDiv': pc.periods[$index].StartDate.Editable}" ng-readonly="!pc.periods[$index].StartDate.Editable" ng-model="period.StartDate" formatted-date format="dd-MM-yyyy" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.StartDate | date:'dd-MM-yyyy'}}</span>
+                                    </div>
+                                    
+                                    <div class="col-xs-3 col-sm-3" style="margin:0; width:20vw;">
+                                        <input ng-change="pc.changedDate($index, 'start')" type="date" ng-click="pc.showDate($index, 'end');$event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].EndDate.Editable, 'invalidInput': pc.validateEndDates($index)}" ng-disabled="!pc.periods[$index].EndDate.Editable" ng-model="period.EndDate" style="width:90%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" value="" />
+                                        <span ng-class="{'hideDiv': pc.periods[$index].EndDate.Editable}" ng-readonly="!pc.periods[$index].EndDate.Editable" ng-model="period.EndDate" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.EndDate | date:'dd-MM-yyyy'}}</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:10vw;">
+                                        <input ng-change="pc.changeWeight($index)" ng-click="$event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].Weight.Editable}" ng-readonly="!pc.periods[$index].Weight.Editable" ng-model="period.Weight" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="width:100%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" type="number" min="{{vm.min}}" max="{{vm.max}}" />
+                                        <span ng-class="{'hideDiv': pc.periods[$index].Weight.Editable}" ng-readonly="!pc.periods[$index].Weight.Editable" ng-model="period.Weight" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.Weight}}</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:16vw;">
+                                        <span style="width:100%; height:35px; line-height:35px; margin-left:0px;">{{pc.periodsCalculations[$index].PeriodDuration}}</span>
+
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0; width:14vw;">
+                                        <span style="width:100%; height:35px; line-height:35px; margin-left:0px;">{{pc.periodsCalculations[$index].PeriodTotal}} {{pc.currencyToken}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="pc.arePeriodsEditable" ng-click="pc.removePeriod($index)" class="col-xs-1 col-sm-1" style="margin-top: -2px; position: relative; left: 90.5%; bottom: 80px; height: 12vh; width: 5.5vw; background-color: #9d0000; border: 2px solid #9d0000;">
+                                <img src="images/trash.png" style="height: 20px; position: relative; top: 40%;" />
+                            </div>
+
+                        </div>
+
+                        <!--<div ng-click="pc.removePeriod($index)" class="col-xs-1 col-sm-1" style="margin-top: -2px; position: relative; left: 90.5%; bottom: 82px; height: 12vh; width: 5.5vw; background-color: #9d0000; border: 2px solid #9d0000;">
+                            <img src="images/trash.png" style="height: 20px; position: relative; top: 40%;" />
+                        </div>-->
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-2 col-sm-2 col-xs-offset-6 col-sm-offset-6">
+                        <span ng-show="pc.documentPeriods.length > 0" ng-class="{'invalidValue': pc.totalWeigths != 100}" style="font-weight:bold;">Total {{pc.totalWeigths}} / 100 %</span>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-xs-offset-1 col-sm-offset-1">
+                        <span ng-show="pc.documentPeriods.length > 0" ng-class="{'invalidValue': pc.totalWeigths != 100}" style="font-weight:bold;">Total {{pc.totalPeriodTotal}} {{pc.currencyToken}}</span>
+                    </div>
+                </div>
+
+                <div class="row" style="margin:0;">
+                    <div class="col-xs-12 col-sm-12">
+                      <span ng-show="pc.documentPeriods.length > 0" style="font-weight: bold;">Validation Messages</span>
+                    </div>
+                </div>
+
+                <div class="row" style="margin:0; margin-bottom: 20px;">
+                    <div style="color:red;" class="col-xs-12 col-sm-12">
+                        <p ng-repeat="msgStart in pc.StartDatesErrorMessages track by $index">{{msgStart}}</p>
+                        <p ng-repeat="msgEnd in pc.EndDatesErrorMessages track by $index">{{msgEnd}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!--<div class="row" style="height:7vh; width: 92vw; position: absolute; bottom: 0;">
+            <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 40px;">
+                <input ng-click="pc.selectPrevStep()" value="Previous" style="text-align:left; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-prev btn btn-primary" type="button">
+            </div>
+            <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 10px;">
+                <input ng-click="pc.selectNextStep('/')" value="Next" style="text-align:right; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-next btn btn-primary" type="button">
+            </div>
+        </div>-->
+
+    </div>
+</div>
+
+<!--OLD LAYOUT-->
+<!--<div ng-controller="PeriodController as pc" style="background-color:#ccc; ">
+
+    <div class="row" style="background-color:#F3F2E8; height:70vh;">
+        <div class="col-xs-12 col-sm-12" style="height: 80vh;margin: 0;">
+            <div class="row" style="background-color: #ccc; margin-top: 0;">
+                <div class="col-xs-12 col-sm-12" style="margin-top: 15px;">
+                    <img src="images/ag_prds-icon-sel.png" style="float:right;" />
+                    <span style="color:#0C4C93;display:block; margin-top: -5px; padding-bottom: 10px; color:rgba(0, 0, 0, 0.79); font-size:18px; font-family:'Open Sans'; text-transform:none;">Periods</span>
+                </div>
+            </div>
+
+            <div class="row" style="height: 50vh;">
+                <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0; overflow-y:auto; height:64vh;">
+
+                    <div style="" ng-repeat="period in pc.documentPeriods track by $index">
+                        <div ng-click="period.Selected = !period.Selected" ng-class="{'selectedPeriod' : period.Selected}" class="col-xs-12 col-sm-12" style="border:2px solid #ccc; margin:10px; height: 14vh;-webkit-box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);border-radius: 6px !important; width:98%; text-transform: none; padding:15px; ">
+
+                            <div class="row">
+
+                                <div class="col-xs-3 col-sm-3">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Start Date</span>
+                                </div>
+                                <div class="col-xs-3 col-sm-3">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">End Date</span>
+                                </div>
+                                <div class="col-xs-2 col-sm-2">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Weight</span>
+                                </div>
+                                <div class="col-xs-2 col-sm-2">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Period Duration</span>
+                                </div>
+                                <div class="col-xs-2 col-sm-2">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Period Total</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-3 col-sm-3" ng-click="">
+                                    <input ng-change="pc.changedDate($index, 'start')" type="date" ng-click="pc.showDate($index, 'start'); $event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].StartDate.Editable}" ng-readonly="!pc.periods[$index].StartDate.Editable" ng-model="period.StartDate " style="width:90%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" value="" />
+                                    <span ng-class="{'hideDiv': pc.periods[$index].StartDate.Editable}" ng-readonly="!pc.periods[$index].StartDate.Editable" ng-model="period.StartDate" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.StartDate}}</span>
+                                </div>
+                                <div class="col-xs-3 col-sm-3">
+                                    <input ng-change="pc.changedDate($index, 'start')" type="date" ng-click="pc.showDate($index, 'end');$event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].EndDate.Editable}" ng-readonly="!pc.periods[$index].EndDate.Editable" ng-model="period.EndDate" style="width:80%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" value="" />
+                                    <span ng-class="{'hideDiv': pc.periods[$index].EndDate.Editable}" ng-readonly="!pc.periods[$index].EndDate.Editable" ng-model="period.EndDate" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.EndDate}}</span>
+                                </div>
+                                <div class="col-xs-2 col-sm-2">
+                                    <input ng-click="$event.stopPropagation();" ng-class="{'hideDiv': !pc.periods[$index].Weight.Editable}" ng-readonly="!pc.periods[$index].Weight.Editable" ng-model="period.Weight" style="width:100%; height:35px; line-height:35px; margin-left:0px;" class="form-control-custom" type="text" value="" />
+                                    <span ng-class="{'hideDiv': pc.periods[$index].Weight.Editable}" ng-readonly="!pc.periods[$index].Weight.Editable" ng-model="period.Weight" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{period.Weight}}</span>
+                                </div>
+                                <div class="col-xs-2 col-sm-2">
+                                    <span style="width:100%; height:35px; line-height:35px; margin-left:0px;">{{pc.periodsCalculations[$index].PeriodDuration}}</span>
+                                </div>
+
+                                <div class="col-xs-2 col-sm-2">
+                                    <span style="width:100%; height:35px; line-height:35px; margin-left:0px;">{{pc.periodsCalculations[$index].PeriodTotal}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <div class="row" style="width:100%; height:5vh; background-color:#F3F2E8;position:absolute; margin-top: -15px;">
+        <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 25px;">
+            <input ng-click="pc.navigateTo2('/')" value="Previous" style="height: 50px; width: 200px; border-radius: 25px; background-color: #0d4c93; border:0;" class="button-prev btn btn-primary" type="button">
+        </div>
+        <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 25px;">
+            <input ng-click="pc.selectNextStep('/')" value="Next" style="height: 50px; width: 200px; border-radius: 25px; background-color: #0d4c93; border:0;" class="button-next btn btn-primary" type="button">
+        </div>
+    </div>
+
+</div>-->

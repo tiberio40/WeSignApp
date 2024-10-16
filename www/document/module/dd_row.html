@@ -1,0 +1,97 @@
+﻿<div ng-controller="DDRowController as md" style="background-color:#f4f4f4;">
+    <div class="row" style="background-color:#f4f4f4; height:90vh;">
+        <div class="row" style="margin:0; padding:10px; padding-right: 0px;">
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Select the Digital Declaration</span>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; margin-right: 20px; " ng->{{ md.DocumentTypeObjName }} Creation</span>
+            </div>
+        </div>
+        <!--<div class="row" style="margin:0; padding:10px; margin-right:15px;">
+            <div class="col-xs-10 col-sm-10">
+                <input style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-model="md.txtSearch" type="text" value="" placeholder="search digital declaration" />
+            </div>
+            <div class="col-xs-2 col-sm-2" ">
+                <button ng-click="md.txtSearch = ''; md.idSelected=''; md.resetSelection()" style="width: 115px; height: 5vh; background-color:#6aa7f1; border-radius:5vh; border:0;" class="btn btn-primary">Clear</button>
+            </div>
+        </div>-->
+        <div class="row" style="margin:0; padding:10px; margin-right:15px;" ng-show="md.showNoDD">
+            <div class="col-xs-12 col-sm-12">
+                <span class="spanCustomerText" style="font-weight:bold;padding:10px">There is no available Digital Declaration to sign. </span>
+                <span class="spanCustomerText" style="padding:10px">If in Draft mode please verify if the specific Digital Declaration hasn't already been signed.</span>
+            </div>
+
+        </div>
+        <div  ng-hide="md.showNoDD" class="row" style="margin:0; padding:10px;">
+            <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0;  overflow:auto; height:71vh;">
+                <table id="ddListTable" dt-options="md.dtOptions" datatable="ng" class="table-striped row-border hover dataTableDashboard">
+                    <thead>
+                        <tr style="background-color:#093162; color:#fff; white-space:nowrap;">
+                            <th ng-repeat='col in md.dtColumns'>{{col.Name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody style="overflow:auto; height: g; width:auto;">
+                        <tr ng-class="{true:'selectedRow'}[item.Id == md.idSelected]" style="white-space:nowrap;  overflow:auto;" ng-click="md.selectDD(item)" ng-repeat='item in md.importedAgreements'>
+                            <td>{{item.CustomerName}}</td>
+                            <td>{{item.CustomerRegisteredName}}</td>
+                            <td>{{item.DDType}}</td>
+                            <td>{{item.Offer}}</td>
+                            <td>{{item.Template}}</td>
+                            <td>{{item.City}}</td>
+                            <td>{{item.Col1}}</td>
+                            <td>{{item.Col2}}</td>
+                            <td>{{item.Col3}}</td>
+                            <td>{{item.Col4}}</td>
+                            <td>{{item.Col5}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+
+                <!--<div class="row" style="margin:0; padding:10px;">
+                    <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0;  overflow:auto; height:67vh;">
+                        <div style="" ng-repeat="item in md.importedAgreements | filter:md.txtSearch">
+                            <div ng-class="{selectedCustomer: item.Id === md.idSelected}" class="col-xs-5 col-sm-5" style="width: 41vw;
+        border:2px solid #ccc; height: 20vh; margin-bottom:10px; margin-left:0px; margin-right:10px; background-color:#fff;" ng-click="md.selectDD(item)">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12" style="padding:10px;">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12">
+                                                <span class="spanCustomerText" style="font-weight:bold;">{{item.CustomerName}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12">
+                                                <span class="spanCustomerText" style="font-size: 12px; margin-top: -1.5vh;">{{item.CustomerRegisteredName}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12">
+                                                <span style="font-weight:bold;font-size: 12px;">Type: </span><span style="font-size: 12px;">{{item.DDType}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12">
+                                                <span style="font-weight:bold;font-size: 12px;">Offer: </span><span style="font-size: 12px;">{{item.Offer}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12">
+                                                <span style="font-weight:bold;font-size: 12px;">Template: </span><span style="font-size: 12px;">{{item.Template}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+
+
+            </div>
+        </div>
+

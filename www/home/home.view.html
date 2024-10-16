@@ -1,0 +1,536 @@
+<div id="content" style="background-color:#F3F2E8; height:90vh; padding-top: 10px;">
+    <div id="modalAgreementDetail" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="background-color: #F3F2E8; border-radius: 2vh;">
+                <div class="modal-header" style="text-align:center; background-color:#ccc; height: 6vh;">
+                    <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:16px !important; color:#000;" id="modal-title">Document Details</h4>
+                </div>                
+                <div class="modal-body" style="text-transform:none;max-height:85vh">                    
+                    <div class="row">
+                        <div class="col-md-4" style="text-align:center;">
+                            <br />
+                            <div ng-click="vm.deleteDocument()" ng-hide="vm.hideDelete" class="btn-cmt btn-cmt-primary" style="text-align:center; width: 17vw; height: 4vh; background-color:#ff4a4a; border:2px solid #ccc; margin-bottom:10px">
+                                <span>Delete Document</span>
+                            </div>
+                            <div>
+                                <button ng-click="vm.edit(); $event.stopPropagation();" style="text-align:center; width: 17vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;" class="btn btn-primary">Edit</button>
+                            </div>
+                            <div ng-click="vm.sendEmail()" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Send via Email</span>
+                            </div>
+                            <div ng-hide="vm.hideSendSignatureEmail()"
+                             ng-click="vm.resendEmailRemote()" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Send Signature Mail </span>
+                            </div>
+                            <div ng-click="vm.preview();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Preview</span>
+                            </div>
+                            <div ng-click="vm.print()" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Print</span>
+                            </div>
+                            <div>&nbsp;</div>
+                        </div>
+                        
+                        <div class="col-md-8">
+                            
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1 || vm.currentItem.Code.indexOf('_Cancelation') !== -1 || vm.currentItem.Code.indexOf('_IBAN') !== -1 || vm.currentItem.Code.indexOf('_DigitalAgreement') !== -1 || vm.currentItem.Code.indexOf('_DigitalForm') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Creation Date: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-createdate" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1 || vm.currentItem.Code.indexOf('_Cancelation') !== -1 || vm.currentItem.Code.indexOf('_IBAN') !== -1 || vm.currentItem.Code.indexOf('_DigitalAgreement') !== -1  || vm.currentItem.Code.indexOf('_DigitalForm') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Template: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-template" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_Cancelation') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Agreement: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-agreementId" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_Cancelation') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Revoked Date: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-revokedDate" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_Cancelation') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Reason: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-reason" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1 || vm.currentItem.Code.indexOf('_Cancelation') !== -1 || vm.currentItem.Code.indexOf('_IBAN') !== -1 || vm.currentItem.Code.indexOf('_DigitalAgreement') !== -1 " class="row" style="margin-bottom:10px;">
+                                
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Customer: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-customer" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Value: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-value" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Territory: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-territory" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Start Date: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-startdate" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">End Date: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-enddate" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_IBAN') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">IBAN: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-iban" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            <div ng-show="vm.currentItem.Code.indexOf('_IBAN') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">NIF: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-nif" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Status: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <select ng-init="vm.selectedStep = vm.availableStatus[0]" ng-model="vm.selectedStep" ng-change="vm.AddComment()" ng-options="item.Name for item in vm.availableStatus"></select>
+                                </div>
+                            </div>
+                            
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Signature Type: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-signature-type" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            
+                            <div ng-show="vm.currentItem.Code.indexOf('_Agreement') !== -1" class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Signature Status: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="modal-body-signature-status" class="spanFiedlLabelBlue"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row" style="margin-bottom:10px;">
+                                <div class="col-md-4" style="text-align:right;">
+                                    <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Comment: </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea id="comment" class="ng-pristine ng-empty ng-touched" style="width:100%;color:black;" type="text" cols="40" rows="5" ng-disabled="vm.IsCommentDisabled" ng-model="vm.currentItem.Comment" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <div class="row" style="max-height:20vh; overflow-y:auto;">
+                        <div class="col-xs-12 col-sm-12">
+                            <div style="font-weight:bold">Workflow history</div>
+                            <div class="rTable">
+                                <div class="rTableRow">
+                                    <div class="rTableHead"><strong>From</strong></div>
+                                    <div class="rTableHead"><strong>To</strong></div>
+                                    <div class="rTableHead"><strong>Comment</strong></div>
+                                    <div class="rTableHead"><strong>CreatedBy</strong></div>
+                                    <div class="rTableHead"><strong>CreatedOn</strong></div>
+                                </div>
+                                <div class="rTableRow" ng-repeat="item in vm.workflowHistory">
+                                    <div class="rTableCell">{{item.StepName1}}</div>
+                                    <div class="rTableCell">{{item.StepName2}}</div>
+                                    <div class="rTableCell">{{item.Comment}}</div>
+                                    <div class="rTableCell">{{item.CreatedBy}}</div>
+                                    <div class="rTableCell">{{item.CreatedOn | date:"yyyy-MM-dd HH:mm"}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12" style="text-align:right;">
+                            <div ng-click="vm.closemodal('#modalAgreementDetail')" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 15vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Close</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modalAgreementSendMail" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="background-color: #F3F2E8; border-radius: 2vh;">
+                <div class="modal-header" style="text-align:center; background-color:#ccc; height: 6vh;">
+                    <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:16px !important; color:#000;" id="modal-title">Send Email</h4>
+                </div>
+                <div class="modal-body" style="margin-top:30px; text-transform:none;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form data-toggle="validator" role="form" id="formSendEmail">
+                                <div class="row form-group" style="margin-bottom:10px;">
+                                    <div class="col-md-2" style="text-align:right;">
+                                        <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">To:</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input id="modal-SendMailto-template" class="ng-pristine ng-empty ng-touched" style="width:100%" type="text" placeholder="Insert Email" />
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom:10px;">
+                                    <div class="col-md-2" style="text-align:right;">
+                                        <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Subject:</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input id="modal-SendMailsubject-template" class="ng-pristine ng-empty ng-touched" style="width:100%" type="text" required placeholder="Insert Subject" />
+                                        <div class="help-block with-errors"></div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom:10px;">
+                                    <div class="col-md-2" style="text-align:right;">
+                                        <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">Body:</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <textarea id="modal-SendMailbody-template" class="ng-pristine ng-empty ng-touched" style="width:100%;height:200px;" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12" style="text-align:right;">
+                            <div ng-click="vm.CompleteSendEmail()" ng-disabled="vm.isSending" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 15vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Send</span>
+                            </div>
+                            <div ng-click="vm.closemodal('#modalAgreementSendMail')" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 15vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Close</span>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>                
+            </div>
+        </div>
+    </div>    
+    <div id="modalShowErrorList" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="background-color: #F3F2E8; border-radius: 2vh;">
+                <div class="modal-header" style="text-align:center; background-color:#ccc; height: 6vh;">
+                    <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:16px !important; color:#000;" id="modal-title">Documents not properly synced</h4>
+                </div>
+                <div class="modal-body" style="text-transform:none;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>There are {{ vm.errorInDocuments.length }} documents not available</p>
+                            <div class="table-responsive" style='max-height: 500px;'>
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Document Number</th>
+                                    <th>Type Document</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="data in vm.errorInDocuments">
+                                    <td>{{ data.DocumentNumber }}</td>
+                                    <td>{{ data.Code }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12" style="text-align:right;">
+                            <div ng-click="vm.showErrorList();" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 15vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Close</span>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>                
+            </div>
+        </div>
+    </div>    
+    <div id="modalAgreementSendMailRemote" class="modal fade login-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="background-color: #F3F2E8; border-radius: 2vh;">
+                <div class="modal-header" style="text-align:center; background-color:#ccc; height: 6vh;">
+                    <h4 class="modal-title spanFiedlLabelBlue" style="text-transform: none;font-weight:normal;  font-size:16px !important; color:#000;" id="modal-title">Send Signature Email</h4>
+                </div>                
+                <div class="modal-body" style="margin-top:30px; text-transform:none;">                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form data-toggle="validator" role="form" id="formSendEmail">
+                                <div class="row form-group" style="margin-bottom:10px;">
+                                    <div class='col-md-2'></div>
+                                    <div class='col-md-5'>
+                                        <input type="radio" id="person_remote_customer" name="person_remote" value="customer" checked>
+                                        <label for="html">Customer</label>
+                                    </div>
+                                    <div class='col-md-5'>
+                                        <input type="radio" id="person_remote_cr" name="person_remote" value="cr">
+                                        <label for="html">Representative</label>
+                                    </div>
+                                </div>
+                                <div class="row form-group" style="margin-bottom:10px;">
+                                    <div class="col-md-2" style="text-align:right;">
+                                        <span style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;">To:</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input id="modal-SendMailto-template-remote" class="ng-pristine ng-empty ng-touched" style="width:100%" type="text" placeholder="Insert Email" />
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12" style="text-align:right;">
+                            <div ng-click="vm.CompleteSendEmailRemote()" ng-disabled="vm.isSending" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 15vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Resend</span>
+                            </div>
+                            <div ng-click="vm.closemodal('#modalAgreementSendMailRemote')" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 15vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
+                                <span>Close</span>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>                
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" ng-hide="vm.errorInDocuments.length == 0" style="margin:20px; margin-top:10px; background-color:#fff; height:10vh; border:1px solid #ccc; border-radius:2vh; margin-bottom:0; margin-top: -5px; ">
+        <div class="col-xs-6 col-sm-6">
+            <input ng-change="vm.criteriaMatch(vm.txtSearch)" ng-model="vm.txtSearch" style="margin-top:2vh; height:5vh; width:100%; border:1px solid #0C4C93; border-radius:6vh; padding-left: 15px; color: #ccc; font-size: 16px; font-weight: bold;" placeholder="Search..." />
+        </div>
+        <div class="col-xs-3 col-sm-3">
+            <select ng-change="vm.criteriaMatch(vm.txtSearch)" style="height: 5vh; border-radius: 5vh; width: 100%; border: 1px solid #0C4C93; padding-left: 15px; color: #0C4C93; font-size: 16px; font-weight: bold; margin-top: 2vh;" ng-model="vm.selectedItem"
+                ng-options="item as item.name for item in vm.filterOptions">
+                <option value="">Select a filter</option>
+            </select>
+        </div>
+        <div class="col-xs-2 col-sm-2">
+            <button ng-click="vm.txtSearch = '';vm.selectedItem = null;vm.Clear();" style="width: 100%; height: 5vh; background-color:#093162; border-radius:5vh; margin-top:2vh;" class="btn btn-primary">Clear</button>
+            
+        </div>
+        <div class="col-xs-1 col-sm-1">
+            <button ng-click="vm.showErrorList();" style="width: 5vh; height: 5vh; background-color:#c0392b; border-radius:5vh; margin-top:2vh;border-color:#c0392b;" class="btn btn-primary">
+                <img src="images/peligro.png" style='width: 20px; height: 20px;margin-left: -4px;'/>
+            </button>
+        </div>
+    </div>
+    
+    <div class="row" ng-hide="vm.errorInDocuments.length != 0" style="margin:20px; margin-top:10px; background-color:#fff; height:10vh; border:1px solid #ccc; border-radius:2vh; margin-bottom:0; margin-top: -5px; ">
+            <div class="col-xs-6 col-sm-6">
+                <input ng-change="vm.criteriaMatch(vm.txtSearch)" ng-model="vm.txtSearch" style="margin-top:2vh; height:5vh; width:90%; border:1px solid #0C4C93; border-radius:6vh; padding-left: 15px; color: #ccc; font-size: 16px; font-weight: bold;" placeholder="Search..." />
+            </div>
+            <div class="col-xs-4 col-sm-4">
+                <select ng-change="vm.criteriaMatch(vm.txtSearch)" style="height: 5vh; border-radius: 5vh; width: 90%; border: 1px solid #0C4C93; padding-left: 15px; color: #0C4C93; font-size: 16px; font-weight: bold; margin-top: 2vh;" ng-model="vm.selectedItem"
+                    ng-options="item as item.name for item in vm.filterOptions">
+                    <option value="">Select a filter</option>
+                </select>
+            </div>
+            <div class="col-xs-2 col-sm-2">
+                <button ng-click="vm.txtSearch = '';vm.selectedItem = null;vm.Clear();" style="width: 115px; height: 5vh; background-color:#093162; border-radius:5vh; margin-top:2vh;" class="btn btn-primary">Clear</button>
+            </div>
+        </div>
+    <div class="row" style="margin:0;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xlg-12" style="margin-top: 15px; margin-bottom: 0px; text-align:center;">
+            <div class="row">
+                <div class="col-xs-2 col-sm-2" id="{{doc.Id}}" ng-repeat="doc in vm.docTypes" ng-click="vm.StepFilterDocumentToggle($event, doc, $index);" class="tags btn-cmt">
+                    <span class="filter-doc-{{doc.DocumentLabelCode}}{{ vm.selectedDocumentType.Id == doc.Id ? '-sel' : '' }}" id=filter-doc-{{doc.DocumentLabelCode}} style="position: relative; top: -5px;"></span>
+                    <span style="font-size: 1.1em; color: #1059AD;">{{doc.Name}}</span>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="row" style="margin:0;">
+        <div ng-class="{true:'noStepFilters'}[vm.steps == null || vm.steps.length == 0]" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xlg-12" style="margin-top: 15px; margin-bottom: -30px; text-align:center;">
+            <div ng-class="{true:'activeButton'}[step.Selected == true]" style="margin-right: 5px; padding-left:8px; padding-right:8px; height:10px !important; font-size: 10pt;display: table;font-weight:100;" id="{{step.DivId}}" ng-repeat="step in vm.steps" ng-click="vm.StepFilterToggle($event, step, $index)" class="tags btn-cmt">
+                <div style="height:10px !important; vertical-align: middle;">
+                    <span style="position: relative; top: -5px;">{{step.Description}}</span>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div ng-show="vm.documentsLoaded == false && vm.documentsLoaded_NoDocuments == false" class="reportContent text-center" style="color: #D3D3D3;border-style: solid;border-width: 2px;padding: 15px;border-radius: 15px;margin-bottom: 20px;overflow: auto;margin-left: 40px;margin-right: 40px;margin-top: 50px;">
+        <div class="spanFiedlLabelBlue">Loading documents, please wait...</div>
+    </div>
+    <div ng-show="vm.documentsLoaded_NoDocuments == true" class="reportContent text-center" style="color: #D3D3D3;border-style: solid;border-width: 2px;padding: 15px;border-radius: 15px;margin-bottom: 20px;overflow: auto;margin-left: 40px;margin-right: 40px;margin-top: 50px;">
+        <div class="spanFiedlLabelBlue">No documents of this type</div>
+    </div>    
+    <div ng-show="vm.selectedDocumentType.Code.indexOf('_Agreement') !== -1 && vm.documentsLoaded == true" ng-class="{true:'noStepFiltersHide'}[vm.steps == null || vm.steps.length == 0]" class="row" style="width:99vw;  margin-left:8px; height: 45vh; margin-top:10px;">
+        <table id="docListTableAG" dt-options="vm.dtOptionsAG" dt-column-defs="vm.dtColumnDefsAG" style="overflow-y:auto; margin-top:15px; table-layout:auto;height:50vh !important;" datatable="ng" class="table-striped row-border hover dataTableDashboard">
+            <thead style="height:55px; width:auto;">
+                <tr style="background-color:#093162; color:#fff; white-space:nowrap;">
+                    <th ng-show="col.show" ng-repeat='col in vm.dtColumnsAG'>{{col.Name}}</th>
+                </tr>
+            </thead>
+            <tbody style="overflow:auto; height: g; width:auto;">
+                <tr style="white-space:nowrap;  overflow:auto;" ng-click="vm.OpenModal(doc)" ng-repeat='doc in vm.cachedDocuments.agreement'>
+                    <td>{{doc.DocumentNumber}}</td>
+                    <td>{{doc.Owner}}</td>
+                    <td>{{doc.CustomerName}}</td>
+                    <td>{{doc.TemplateName}}</td>
+                    <td>{{doc.CreationDate}}</td>
+                    <td>{{doc.StartDate | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{doc.EndDate | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{doc.StepName}}</td>
+                    <td>{{doc.SignatureType | SignaturaType }}</td>
+                    <td>{{ [doc.SignatureType, doc.SignatureStatus] | SignaturaStatus }}</td>
+                    <td>{{doc.GeographyDescription}}</td>
+                    <td>{{doc.ContractValue}}</td>
+                    <td>{{doc.Comment}}</td>
+                    <td>{{doc.BudgetName}}</td>
+                    <td ng-show="col.show">{{doc.StepCode}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+    <div ng-show="vm.selectedDocumentType.Code.indexOf('_Cancelation') !== -1 && vm.documentsLoaded == true" ng-class="{true:'noStepFiltersHide'}[vm.steps == null || vm.steps.length == 0]" class="row" style="width:99vw;  margin-left:8px; height: 45vh; margin-top:10px;">
+        <table id="docListTableCC" dt-options="vm.dtOptionsCC" dt-column-defs="vm.dtColumnDefsCC" style="overflow-y:auto; margin-top:15px; table-layout:auto;height:50vh !important;" datatable="ng" class="table-striped row-border hover dataTableDashboard">
+            <thead style="height:55px; width:auto;">
+                <tr style="background-color:#093162; color:#fff; white-space:nowrap;">
+                    <th ng-show="col.show" ng-repeat='col in vm.dtColumnsCC'>{{col.Name}}</th>
+                </tr>
+            </thead>
+            <tbody style="overflow:auto; height: g; width:auto;">
+                <tr style="white-space:nowrap;  overflow:auto;" ng-click="vm.OpenModal(doc)" ng-repeat='doc in vm.cachedDocuments.cancelation'>
+                    <td>{{doc.DocumentNumber}}</td>
+                    <td>{{doc.Owner}}</td>
+                    <td>{{doc.TemplateName}}</td>
+                    <td>{{doc.AgreementId}}</td>
+                    <td>{{doc.RevokedDate | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{doc.Reason}}</td>
+                    <td>{{doc.SignatureType | SignaturaType }}</td>
+                    <td>{{ [doc.SignatureType, doc.SignatureStatus] | SignaturaStatus }}</td>
+                    <td>{{doc.CreationDate}}</td>
+                    <td>{{doc.StepName}}</td>
+                    <td>{{doc.CustomerName}}</td>
+                    <td ng-show="col.show">{{doc.StepCode}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+    <div ng-show="vm.selectedDocumentType.Code.indexOf('_IBAN') !== -1 && vm.documentsLoaded == true" ng-class="{true:'noStepFiltersHide'}[vm.steps == null || vm.steps.length == 0]" class="row" style="width:99vw;  margin-left:8px; height: 45vh; margin-top:10px;">
+        <table id="docListTableIB" dt-options="vm.dtOptionsIB" dt-column-defs="vm.dtColumnDefsIB" style="overflow-y:auto; margin-top:15px; table-layout:auto;height:50vh !important;" datatable="ng" class="table-striped row-border hover dataTableDashboard">
+            <thead style="height:55px; width:auto;">
+                <tr style="background-color:#093162; color:#fff; white-space:nowrap;">
+                    <th ng-show="col.show" ng-repeat='col in vm.dtColumnsIB'>{{col.Name}}</th>
+                </tr>
+            </thead>
+            <tbody style="overflow:auto; height: g; width:auto;">
+                <tr style="white-space:nowrap;  overflow:auto;" ng-click="vm.OpenModal(doc)" ng-repeat='doc in vm.cachedDocuments.iban'>
+                    <td>{{doc.DocumentNumber}}</td>
+                    <td>{{doc.Owner}}</td>
+                    <td>{{doc.TemplateName}}</td>
+                    <td>{{doc.CustomerName}}</td>
+                    <td>{{doc.IBAN}}</td>
+                    <td>{{doc.NIF}}</td>
+                    <td>{{doc.SignatureType | SignaturaType }}</td>
+                    <td>{{ [doc.SignatureType, doc.SignatureStatus] | SignaturaStatus }}</td>
+                    <td>{{doc.CreationDate}}</td>
+                    <td>{{doc.StepName}}</td>
+                    <td ng-show="col.show">{{doc.StepCode}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+    <div ng-show="vm.selectedDocumentType.Code.indexOf('_DigitalAgreement') !== -1 && vm.documentsLoaded == true" ng-class="{true:'noStepFiltersHide'}[vm.steps == null || vm.steps.length == 0]" class="row" style="width:99vw;  margin-left:8px; height: 45vh; margin-top:10px;">
+        <table id="docListTableDD" dt-options="vm.dtOptionsDD" dt-column-defs="vm.dtColumnDefsDD" style="overflow-y:auto; margin-top:15px; table-layout:auto;height:50vh !important;" datatable="ng" class="table-striped row-border hover dataTableDashboard">
+            <thead style="height:55px; width:auto;">
+                <tr style="background-color:#093162; color:#fff; white-space:nowrap;">
+                    <th ng-show="col.show" ng-repeat='col in vm.dtColumnsDD'>{{col.Name}}</th>
+                </tr>
+            </thead>
+            <tbody style="overflow:auto; height: g; width:auto;">
+                <tr style="white-space:nowrap;  overflow:auto;" ng-click="vm.OpenModal(doc)" ng-repeat='doc in vm.cachedDocuments.digitalAgreement'>
+                    <td>{{doc.DocumentNumber}}</td>
+                    <td>{{doc.Owner}}</td>
+                    <td>{{doc.TemplateName}}</td>
+                    <td>{{doc.CustomerName}}</td>
+                    <td>{{doc.SignatureType | SignaturaType }}</td>
+                    <td>{{ [doc.SignatureType, doc.SignatureStatus] | SignaturaStatus }}</td>
+                    <td>{{doc.CreationDate}}</td>
+                    <td>{{doc.StepName}}</td>
+                    <td ng-show="col.show">{{doc.StepCode}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+    <div ng-show="vm.selectedDocumentType.Code.indexOf('_DigitalForm') !== -1 && vm.documentsLoaded == true" ng-class="{true:'noStepFiltersHide'}[vm.steps == null || vm.steps.length == 0]" class="row" style="width:99vw;  margin-left:8px; height: 45vh; margin-top:10px;">
+        <table id="docListTableDF" dt-options="vm.dtOptionsDF" dt-column-defs="vm.dtColumnDefsDF" style="overflow-y:auto; margin-top:15px; table-layout:auto;height:50vh !important;" datatable="ng" class="table-striped row-border hover dataTableDashboard">
+            <thead style="height:55px; width:auto;">
+                <tr style="background-color:#093162; color:#fff; white-space:nowrap;">
+                    <th ng-show="col.show" ng-repeat='col in vm.dtColumnsDF'>{{col.Name}}</th>
+                </tr>
+            </thead>
+            <tbody style="overflow:auto; height: g; width:auto;">
+                <tr style="white-space:nowrap;  overflow:auto;" ng-click="vm.OpenModal(doc)" ng-repeat='doc in vm.cachedDocuments.digitalForm'>
+                    <td>{{doc.DocumentNumber}}</td>
+                    <td>{{doc.Owner}}</td>
+                    <td>{{doc.TemplateName}}</td>
+                    <td>{{doc.CustomerName}}</td>
+                    <td>{{doc.SignatureType | SignaturaType }}</td>
+                    <td>{{ [doc.SignatureType, doc.SignatureStatus] | SignaturaStatus }}</td>
+                    <td>{{doc.CreationDate}}</td>
+                    <td>{{doc.StepName}}</td>
+                    <td ng-show="col.show">{{doc.StepCode}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+º

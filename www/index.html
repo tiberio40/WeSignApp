@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src * gap://ready file:; style-src 'self' 'unsafe-inline' *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;img-src 'self' data: *">
+    <link href="css/index.css" rel="stylesheet" />
+    <link href="css/ui-bootstrap-csp.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/index.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/sweetalert.css" rel="stylesheet" />
+    <link href="css/select.min.css" rel="stylesheet" />
+    <link href="css/datatables.min.css" rel="stylesheet" />
+    <link href="css/angular-datatables.css" rel="stylesheet" />
+    <link href="css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+    <title>CMS</title>
+</head>
+
+<script>
+    var navHeight = 0;
+    var lineHeight = 0;
+    function opencloseNav() {
+
+        navHeight = (navHeight == 0 ? $('#navMenu').height() : 0);
+        if (lineHeight == 0)
+            lineHeight = $('#navMenu').css('line-height');
+
+
+        if ($('#navMenu').css('line-height') == 0 && lineHeight > 0)
+            $('#navMenu').css('line-height', lineHeight);
+
+        if ($('#navheightHidden').val() == 0 && navHeight > 0)
+            $("#navheightHidden").val(navHeight);
+
+
+        if (navHeight > 0) {
+            $('#navMenu').css('display', 'none');
+            $('#content').css('height', '91vh');
+        }
+        else {
+            $('#navMenu').css('display', 'block');
+            $('#content').css('height', '80vh');
+        }
+
+    }
+</script>
+
+</head>
+
+<body style="overflow-y:hidden; height:100vh;">
+    <div class="app">
+        <div class="">
+            <div class="">
+                <div class="">
+                    <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"
+                        ng-if="flash" ng-bind="flash.message"></div>
+                    <div ui-view></div>
+                    <div ui-view="menutop" style="width:100vw !important;"></div>
+                    <div ui-view="content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Angular & Bootsrap-->
+    <script src="scripts/jquery-1.9.1.min.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+    
+    <!--Cordova-->
+    <script src="scripts/ng-cordova.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+    
+    <!--Other libraries-->
+    <script src="scripts/angular-resource.min.js"></script>
+    <script src="scripts/angular-cookies.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/ui-bootstrap.min.js"></script>
+    <script src="scripts/ui-bootstrap-tpls.min.js"></script>
+    <script src="scripts/loading-bar.min.js"></script>
+    <script src="scripts/SQLitePlugin.js"></script>
+    <script src="scripts/linq-vsdoc.js"></script>
+    <script src="scripts/validator.min.js"></script>
+    <script src="scripts/linq.js"></script>
+    <script src="scripts/linq.min.js"></script>
+    <script src="scripts/angular-md5.js"></script>
+    <script src="scripts/ngStorage.min.js"></script>
+    <script src="scripts/angular-sanitize.min.js"></script>
+    
+    <!--Controllers-->
+    <script src="scripts/app/app.module.js"></script>
+    <script src="scripts/app/config.js"></script>
+    <script src="scripts/app/controllers/account.controller.js"></script>
+    <script src="scripts/app/controllers/modal.controller.js"></script>
+    <script src="scripts/app/controllers/sync.controller.js"></script>
+    <script src="scripts/app/controllers/home.controller.js"></script>
+    <script src="scripts/app/controllers/createdocument.controller.js"></script>
+    <script src="scripts/app/controllers/selectdocumenttype.controller.js"></script>
+    <script src="scripts/app/controllers/sidebardocument.controller.js"></script>
+    <script src="scripts/app/controllers/menutop.controller.js"></script>
+    <script src="scripts/app/controllers/modules/scriptiframe.js"></script>
+    <script src="scripts/app/controllers/oauth.controller.js"></script>
+
+    <!--Factorys-->
+    <script src="scripts/app/factory/readData.factory.js"></script>
+    <script src="scripts/app/factory/updateData.factory.js"></script>
+
+    <!--Modules-->
+    <script src="scripts/app/controllers/modules/editclient.controller.js"></script>
+    <script src="scripts/app/controllers/modules/client.controller.js"></script>
+    <script src="scripts/app/controllers/modules/template.controller.js"></script>
+    <script src="scripts/app/controllers/modules/md_agreement.controller.js"></script>
+    <script src="scripts/app/controllers/modules/period.controller.js"></script>
+    <script src="scripts/app/controllers/modules/objectives.controller.js"></script>
+    <script src="scripts/app/controllers/modules/body.controller.js"></script>
+    <script src="scripts/app/controllers/modules/budgetaccount.controller.js"></script>
+    <script src="scripts/app/controllers/modules/dynamicitems.controller.js"></script>
+    <script src="scripts/app/directives/formattedDate.directive.js"></script>
+    <script src="scripts/app/controllers/modules/md_canc.controller.js"></script>
+    <script src="scripts/app/controllers/modules/md_digitaldeclarations.controller.js"></script>
+    <script src="scripts/app/controllers/modules/md_iban.controller.js"></script>
+    <script src="scripts/app/controllers/modules/canc.template.controller.js"></script>
+    <script src="scripts/app/controllers/modules/ibanchange.controller.js"></script>
+    <script src="scripts/app/controllers/modules/md_digitalforms.controller.js"></script>
+    <script src="scripts/app/controllers/modules/dd_row.controller.js"></script>
+
+    <!--ItemTypes-->
+    <script src="scripts/app/itemtype/item.directive.js"></script>
+    <script src="scripts/app/itemtype/checkbox.component.js"></script>
+    <script src="scripts/app/itemtype/checkboxlist.component.js"></script>
+    <script src="scripts/app/itemtype/dropdown.component.js"></script>
+    <script src="scripts/app/itemtype/imagedropdown.component.js"></script>
+    <script src="scripts/app/itemtype/imagemultipleselect.component.js"></script>
+    <script src="scripts/app/itemtype/multiline.component.js"></script>
+    <script src="scripts/app/itemtype/multipleselect.component.js"></script>
+    <script src="scripts/app/itemtype/numeric.component.js"></script>
+    <script src="scripts/app/itemtype/radiobutton.component.js"></script>
+    <script src="scripts/app/itemtype/radiobuttonlist.component.js"></script>
+    <script src="scripts/app/itemtype/textbox.component.js"></script>
+    <script src="scripts/app/itemtype/label.component.js"></script>
+    
+    <!--Services-->
+    <script src="scripts/app/services/authentication.service.js"></script>
+    <script src="scripts/app/services/user.service.js"></script>
+    <script src="scripts/app/services/import.service.js"></script>
+    <script src="scripts/app/services/sync.service.js"></script>
+    <script src="scripts/app/services/document.service.js"></script>
+    <script src="scripts/app/services/apiInterceptor.js"></script>
+
+    <!--Third Libraries-->
+    <script src="scripts/sweetalert.min.js"></script>
+    <script src="scripts/fastclick.js"></script>
+    <script src="scripts/select.min.js"></script>
+    <script src="scripts/signature_pad.min.js"></script>
+    <script src="scripts/angular-datatables/datatables.min.js"></script>
+    <script src="scripts/angular-datatables/angular-datatables.js"></script>
+    <script src="scripts/angular-datatables/dataTables.scroller.min.js"></script>
+    <script src="scripts/angular-datatables/angular-datatables.scroller.min.js"></script>
+
+
+</body>
+
+</html>

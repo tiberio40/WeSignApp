@@ -1,0 +1,165 @@
+﻿<!--NEW LAYOUT-->
+<div ng-controller="ObjectivesController as oc" style="background-color:#ccc; ">
+
+    <div class="row" style="background-color:#f4f4f4; height:90vh;">
+        <div class="row" style="margin:0; padding:10px; padding-right: 0px;">
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Select the Objectives by pressing on each item.</span>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; margin-right: 20px; " ng->{{ oc.DocumentTypeObjName }} Creation</span>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin:0; padding:10px;">
+            <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0;  overflow-y:auto; height:76vh;">
+                <div style="" ng-repeat="objective in oc.objectives track by $index">
+                    <div ng-class="{'selectedPeriod' : oc.documentObjectives[$index].Selected}" class="col-xs-12 col-sm-12" style="width: 87vw;
+        border:2px solid #ccc; min-height: 25vh; margin-bottom:20px; margin-left:0px; margin-right:10px; background-color:#fff;">
+                        <div style="display: flex; min-height: 25vh;" class="row" ng-click="oc.select(oc.documentObjectives[$index])">
+                            <div class="col-xs-1 col-sm-1" style="margin-left: -1px; margin-top: -2px; min-height:25vh; align-items: stretch;
+ width:3vw; background-color:#6aa7f1; border:2px solid #6aa7f1;">
+                            </div>
+                            <div class="col-xs-11 col-sm-11" style="padding:10px;">
+                                <div class="row">
+                                    <div class="col-xs-10 col-sm-10" style="margin:0;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Description</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Weight</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-10 col-sm-10" style="margin:0;" ng-class="{'appEllipseContent': !oc.isActive[$index], 'appEllipseContenthover': oc.isActive[$index]}">
+                                        <textarea ng-click="$event.stopPropagation();" ng-class="{'hideDiv': !objective.Description.Editable || !objective.Description.Visible}" ng-model="oc.documentObjectives[$index].Description" style="width:100%; height:120px; line-height:35px; margin-left:0px;" class="form-control-custom" name="Text1" cols="40" rows="5"></textarea>
+                                        <span ng-class="{'hideDiv': objective.Description.Editable || !objective.Description.Visible}" ng-model="oc.documentObjectives[$index].Description" style="width:100%;height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{oc.documentObjectives[$index].Description}}</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0;">
+                                        <input ng-click="$event.stopPropagation();" ng-change="oc.changeTotal(objective,$index);$event.stopPropagation();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-class="{'hideDiv': !objective.Weight.Editable || !objective.Weight.Visible}" ng-model="oc.documentObjectives[$index].Weight" style="height:35px; line-height:35px; margin-left:0px; width:50px;" class="form-control-custom" type="number" min="{{vm.min}}" max="{{vm.max}}"  />
+                                        <span ng-class="{'hideDiv': objective.Weight.Editable || !objective.Weight.Visible}" ng-model="oc.documentObjectives[$index].Weight" style="width:80%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{oc.documentObjectives[$index].Weight}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-10 col-sm-10" style="margin:0;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Target</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0;">
+                                        <span class="spanCustomerText" style="font-weight:bold;">Total</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-10 col-sm-10" style="margin:0;" ng-class="{'appEllipseContent': !oc.isActive[$index], 'appEllipseContenthover': oc.isActive[$index]}">
+                                        <textarea ng-click="$event.stopPropagation();" ng-change="$event.stopPropagation();" ng-class="{'hideDiv': !objective.Target.Editable || !objective.Target.Visible}" ng-model="oc.documentObjectives[$index].Target" style="width:100%; height:120px; line-height:35px; margin-left:0px;" class="form-control-custom" name="Text1" cols="40" rows="5"></textarea>
+                                        <span ng-class="{'hideDiv': objective.Target.Editable || !objective.Target.Visible}" ng-model="oc.documentObjectives[$index].Target" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{oc.documentObjectives[$index].Target}}</span>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2" style="margin:0;">
+                                        <span  ng-model="oc.documentObjectives[$index].Total" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{oc.documentObjectives[$index].Total}} {{oc.currencyToken}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-show="oc.objectives.length > 0">
+                    <div class="col-xs-2 col-sm-2 col-xs-offset-6 col-sm-offset-6">
+                        <span ng-class="{'invalidValue': oc.totalWeigths != 100}" style="font-weight:bold;">Total {{oc.totalWeigths}} / 100 %</span>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-xs-offset-1 col-sm-offset-1">
+                        <span ng-class="{'invalidValue': oc.totalWeigths != 100}" style="font-weight:bold;">Total {{oc.totalObjTotal}} {{oc.currencyToken}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--<div class="row" style="height:7vh; width: 92vw; position: absolute; bottom: 0;">
+            <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 40px;">
+                <input ng-click="oc.selectPrevStep()" value="Previous" style="text-align:left; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-prev btn btn-primary" type="button">
+            </div>
+            <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 10px;">
+                <input ng-click="oc.selectNextStep('/')" value="Next" style="text-align:right; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-next btn btn-primary" type="button">
+            </div>
+        </div>-->
+    </div>
+</div>
+
+<!--OLD LAYOUT-->
+<!--<div ng-controller="ObjectivesController as oc" style="background-color:#ccc; ">
+
+
+    <div class="row" style="background-color:#F3F2E8; height:70vh;">
+        <div class="col-xs-12 col-sm-12" style="height: 80vh;margin: 0;">
+            <div class="row" style="background-color: #ccc; margin-top: 0;">
+                <div class="col-xs-12 col-sm-12" style="margin-top: 15px;">
+                    <img src="images/ag_obj-icon-sel.png" style="float:right;" />
+                    <span style="color:#0C4C93;display:block; margin-top: -5px; padding-bottom: 10px; color:rgba(0, 0, 0, 0.79); font-size:18px; font-family:'Open Sans'; text-transform:none;">Objectives</span>
+                </div>
+            </div>
+
+            <div class="row" style="height: 50vh;">
+                <div class="col-xs-12 col-sm-12" style="position:relative; margin: 0; overflow-y:auto; height:62vh;">
+
+                    <div style="" ng-repeat="objective in oc.objectives track by $index">
+                        <div ng-click="oc.documentObjectives[$index].Selected = !oc.documentObjectives[$index].Selected" ng-class="{'selectedPeriod' : oc.documentObjectives[$index].Selected}" class="col-xs-12 col-sm-12" style="border:2px solid #ccc; margin:10px; min-height: 30vh;-webkit-box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);border-radius: 6px !important; width:98%; text-transform: none; padding:15px; ">
+
+                            <div class="row">
+                                <div class="col-xs-10 col-sm-10">
+                                    <span ng-class="{'hideDiv': !objective.Description.Visible}" style="color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">Description</span>
+                                </div>
+                                <div class="col-xs-2 col-sm-2">
+                                    <span ng-class="{'hideDiv': !objective.Weight.Visible}" style="color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">Weight</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-10 col-sm-10" ng-class="{'appEllipseContent': !oc.isActive[$index], 'appEllipseContenthover': oc.isActive[$index]}" ng-click="oc.isActive[$index] = !oc.isActive[$index]">
+                                    <textarea ng-class="{'hideDiv': !objective.Description.Editable || !objective.Description.Visible}" ng-model="oc.documentObjectives[$index].Description" style="width:100%; height:120px; line-height:35px; margin-left:0px;" class="form-control-custom" name="Text1" cols="40" rows="5"></textarea>
+                                    <span ng-class="{'hideDiv': objective.Description.Editable || !objective.Description.Visible}" ng-model="oc.documentObjectives[$index].Description" style="width:100%;height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{oc.documentObjectives[$index].Description}}</span>
+                                </div>
+                                <div class="col-xs-2 col-sm-2">
+                                    <input ng-class="{'hideDiv': !objective.Weight.Editable || !objective.Weight.Visible}" ng-model="oc.documentObjectives[$index].Weight" style="height:35px; line-height:35px; margin-left:0px; width:50px;" class="form-control-custom" type="text" value="" />
+                                    <span ng-class="{'hideDiv': objective.Weight.Editable || !objective.Weight.Visible}" ng-model="oc.documentObjectives[$index].Weight" style="width:80%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{oc.documentObjectives[$index].Weight}}</span>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xs-10 col-sm-10" ng-class="{'appEllipseContent': !oc.isActive[$index], 'appEllipseContenthover': oc.isActive[$index]}" ng-click="oc.isActive[$index] = !oc.isActive[$index]">
+                                    <span ng-class="{'hideDiv': !objective.Target.Visible}" style="color: #000; font-size: 12px; font-weight: normal; margin-bottom: 10px;">Target</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-10 col-sm-10" ng-class="{'appEllipseContent': !oc.isActive[$index], 'appEllipseContenthover': oc.isActive[$index]}" ng-click="oc.isActive[$index] = !oc.isActive[$index]">
+                                    <textarea ng-class="{'hideDiv': !objective.Target.Editable || !objective.Target.Visible}" ng-model="oc.documentObjectives[$index].Target" style="width:100%; height:120px; line-height:35px; margin-left:0px;" class="form-control-custom" name="Text1" cols="40" rows="5"></textarea>
+                                    <span ng-class="{'hideDiv': objective.Target.Editable || !objective.Target.Visible}" ng-model="oc.documentObjectives[$index].Target" style="width:100%; height:120px; line-height:35px; margin-left:0px;" name="Text1" cols="40" rows="5" type="text">{{oc.documentObjectives[$index].Target}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <div class="row" style="width:100%; height:5vh; background-color:#F3F2E8;position:absolute; margin-top: -15px;">
+        <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 25px;">
+            <input ng-click="oc.navigateTo2('/')" value="Previous" style="height: 50px; width: 200px; border-radius: 25px; background-color: #0d4c93; border:0;" class="button-prev btn btn-primary" type="button">
+        </div>
+        <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 25px;">
+            <input ng-click="oc.selectNextStep('/')" value="Next" style="height: 50px; width: 200px; border-radius: 25px; background-color: #0d4c93; border:0;" class="button-next btn btn-primary" type="button">
+        </div>
+    </div>
+
+</div>-->

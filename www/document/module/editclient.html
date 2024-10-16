@@ -1,0 +1,110 @@
+﻿<div ng-controller="EditClientController as ec" style="background-color:#f4f4f4; ">
+    <div class="row" style="background-color:#f4f4f4; height:90vh;padding:24px">
+        <div class="row" style="margin:0;margin-bottom:10px">
+            <div class="col-xs-6 col-sm-6" style="padding-left:0px;margin-top:-14px">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Verify Customer Information.</span>
+            </div>
+            <div class="col-xs-6 col-sm-6" style="padding-left:0px;margin-top:-14px">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; " ng->{{ ec.DocumentTypeObjName }} Creation</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:20px;">
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <div style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">Code:</div>
+                <div style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px; margin-top:-15px">{{ec.currentclient.Code}}</div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <div style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">TaxNumber:</div>
+                <div style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;  margin-top:-15px">{{ec.currentclient.TaxNumber}}</div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:20px;">
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <div style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">Name:</div>
+                <div style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px;margin-top:-15px">{{ec.currentclient.Name}}</div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <div style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">Registered Name:</div>
+                <div style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px; margin-top:-15px">{{ec.currentclient.RegisteredName}}</div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <div style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">Address:</div>
+                <div style="color: #000; font-size: 14px; font-weight: normal; margin-bottom: 10px; margin-top:-15px">{{ec.currentclient.Address1}} <br /> {{ec.currentclient.Region}} <br /> {{ec.currentclient.PostCode}}</div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                &nbsp;
+            </div>
+        </div>
+
+
+
+        <div class="row" style="margin-top:30px;" ng-hide="ec.IsIBAN()">
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <span style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">Email</span>
+            </div>
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <span style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">Telephone</span>
+            </div>
+
+        </div>
+
+        <div class="row" ng-hide="ec.IsIBAN()">
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <input ng-class="{'invalidInput': !ec.IsEmailValid}" style="width:100%; height:40px; line-height:40px; margin-left:0px; -webkit-user-select:auto;" class="form-control-custom" ng-change="ec.validateEmail()" ng-model="ec.currentclient.Email" type="text" />
+                <div style="height:16px"><span ng-show="!ec.IsEmailValid" style="color:red">{{ec.EmailValidationMessage}}</span></div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <input ng-class="{'invalidInput': !ec.IsTelephoneValid}" style="width:100%; height:40px; line-height:40px; margin-left:0px; -webkit-user-select:auto;" class="form-control-custom" ng-change="ec.validateTelephone()" ng-model="ec.currentclient.Telephone" type="text"  />
+                <div style="height:16px"><span ng-show="!ec.IsTelephoneValid" style="color:red">{{ec.TelephoneValidationMessage}}</span></div>
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top:30px;">
+
+            <div class="col-xs-12 col-sm-12" style="text-align:left;">
+                <span style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">IBAN</span>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12" style="text-align:left;">
+                <input ng-disabled="ec.IBANReadOnly"  ng-class="{'invalidInput': !ec.IsIBANValid}" style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-change="ec.IBANChange(ec.customerIBAN.IBAN)" ng-model="ec.customerIBAN.IBAN" type="text" />
+                <div ng-show="!ec.IsIBANValid"><span style="color:red">{{ec.IBANValidationMessage}}</span></div>
+                <div ng-show="ec.CanGoToNextStep()"><span style="color:red">There's a pending IBAN approval for this Customer</span></div>
+            </div>
+
+        </div>
+        
+        <div class="row" style="margin-top:0px;text-align:left" ng-show="ec.IsPTAgreement()">
+            <div class="col-xs-12 col-sm-12">
+                <tt>by changing the IBAN Value a new document "Change IBAN" will be automatically opened after completing this document</tt>
+            </div>
+        </div>
+
+        <!--<div class="row" style="height:7vh; width: 90vw; position: absolute; bottom: 0;">
+            <div class="col-xs-6 col-sm-6" style="text-align:left; padding-left: 16px;">
+                <input ng-click="ec.selectPrevStep()" value="Previous" style="text-align:left; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-prev btn btn-primary" type="button">
+            </div>
+            <div class="col-xs-6 col-sm-6" style="text-align:right; padding-right: 10px;">
+                <input ng-click="ec.selectNextStep()" value="Next" style="text-align:right; height: 5vh; width: 200px; border-radius: 25px; background-color: #585858; border:0;" class="button-next btn btn-primary" type="button">
+            </div>
+        </div>-->
+
+    </div>
+</div>

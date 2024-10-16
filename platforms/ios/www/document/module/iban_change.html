@@ -1,0 +1,30 @@
+﻿<div ng-controller="IbanChangeController as ic" style="background-color:#f4f4f4;">
+    <div class="row" style="background-color:#f4f4f4; height:90vh;padding:24px">
+        <div class="row" style="margin:0;margin-bottom:10px">
+            <div class="col-xs-6 col-sm-6" style="padding-left:0px;margin-top:-14px">
+                <span style="text-transform: none; color:#000; font-family:'Open Sans'; font-size:14px; display: block; font-weight: bold; ">Please Verify Customer Information.</span>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+                <span style="text-transform: none; color: #093162; font-family:'Open Sans'; font-size:12px; display: block; font-weight: bold; float:right; margin-right: 20px; " ng->{{ ic.DocumentTypeObjName }} Creation</span>
+            </div>
+        </div>
+        <div class="row" style="margin-top:30px;">
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <span style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">NIF</span>
+            </div>
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <span style="color: #000; font-size: 14px; font-weight: bold; margin-bottom: 10px;">IBAN</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <input readonly="readonly" style="width:100%; height:40px; line-height:40px; margin-left:0px; -webkit-user-select:auto;" class="form-control-custom"  ng-model="ic.currentclient.TaxNumber" type="text" />
+            </div>
+            <div class="col-xs-6 col-sm-6" style="text-align:left;">
+                <input ng-class="{'invalidInput': !ic.IsIBANValid}" style="width:100%; height:40px; line-height:40px; margin-left:0px;" class="form-control-custom" ng-change="ic.IBANChange(ic.customerIBAN.IBAN)" ng-model="ic.customerIBAN.IBAN" type="text" />
+                <div ng-show="!ic.IsIBANValid"><span style="color:red">{{ic.IBANValidationMessage}}</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
