@@ -31,5 +31,11 @@ jobs:
         - name: Remove Xcode
           run: cordova platform rm ios
 
+        - name: List directory contents
+          run: ls
+
         - name: Build Xcode
           run: cordova platform add ios
+
+        - name: List directory contents
+          run: ls
