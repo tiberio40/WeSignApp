@@ -33,7 +33,7 @@ jobs:
         #- name: Crate Xcode Project
         #  run: cordova platform add ios
     deploy:
-      #needs: build
+      needs: build
       runs-on: macos-latest
       steps:
         - name: list files
