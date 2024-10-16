@@ -28,5 +28,8 @@ jobs:
         - name: Install NPM
           run: npm install
 
+        - name: Remove Xcode
+          run: cordova platform rm ios
+
         - name: Build Xcode
-          run: cordova build
+          run: cordova platform add ios
