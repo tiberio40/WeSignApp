@@ -48,4 +48,12 @@ jobs:
           with:          
             name: xcode-build
         - name: list files
-          run: ls -la 
+          run: ls -la
+        - name: Install Fastlane        
+          run: |
+            sudo gem install fastlane -NV
+        - name: Create IPA        
+          run: |
+            cd platforms/ios
+            fastlane gym --scheme "WeSign QA" --workspace "WeSign QA.xcworkspace"
+            
