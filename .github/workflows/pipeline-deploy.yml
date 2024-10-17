@@ -53,8 +53,12 @@ jobs:
       - name: Build iOS   
         run: cordova build ios --buildConfig=build.json
         
-      - name: Build IPA   
-        run: cordova build ios ----device
+      - name: List Keychains
+        run: security list-keychains
+
+      - name: Check Disk Space
+        run: df -h
+
         
       - name: Save Build Artifacts        
         uses: actions/upload-artifact@v4        
