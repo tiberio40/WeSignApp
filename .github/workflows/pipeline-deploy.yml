@@ -29,33 +29,23 @@ jobs:
           cp /tmp/provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
           security list-keychains -d user -s build.keychain login.keychain
 
-      - name: Install Node.js        
-        uses: actions/setup-node@v4        
-        with:          
-          node-version: '18.4.0'          
-          cache: 'npm'              
-      - name: Install Cordova        
-        run: npm install -g cordova
-        
-      - name: Install NPM        
-        run: npm install
-
-      - name: Clean iOS   
-        run: cordova clean ios
-        
-      - name: Remove Xcode Project        
-        run: cordova platform rm ios        
-      
-        
-      - name: Create Xcode Project
-        run: cordova platform add ios       
-        
-      - name: Build iOS   
-        run: cordova build ios --buildConfig=build.json
-        
       - name: List Keychains
         run: security list-keychains
 
+      
+      - name: Unlock Keychain
+        run: security unlock-keychain -p 'mi-contraseña-segura' /Users/runner/Library/Keychains/build.keychain-db
+
+      - name: Set Default Keychain
+        run: security list-keychains -s /Users/runner/Library/Keychains/build.keychain-db
+
+      - name: Verify Keychain Permissions
+        run: security set-keychain-settings /Users/runner/Library/Keychains/build.keychain-db
+
+
+
+        
+      
       - name: Check Disk Space
         run: df -h
 
