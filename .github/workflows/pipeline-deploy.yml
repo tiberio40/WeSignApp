@@ -16,9 +16,9 @@ jobs:
         run: |
           # Set the new name
           sed -i '' "s/<name>.*<\/name>/<name>WeSign<\/name>/g" config.xml
-          sed -i '' 's/version="[^"]*"/version="'${{ env.VERSION }}'"/' config.xml
-          sed -i '' 's/var vesionAppConfig = ".*";/var vesionAppConfig = "'${{ env.VERSION }}'";/' www/scripts/app/config.js
-          sed -i '' 's/var environmentConfig  = ".*";/var environmentConfig  = "'${{ env.ENVIRONMENT_PROD }}'";/' www/scripts/app/config.js
+          sed -i '' 's/version="[^"]*"/version="'${{ vars.VERSION }}'"/' config.xml
+          sed -i '' 's/var vesionAppConfig = ".*";/var vesionAppConfig = "'${{ vars.VERSION }}'";/' www/scripts/app/config.js
+          sed -i '' 's/var environmentConfig  = ".*";/var environmentConfig  = "'${{ vars.ENVIRONMENT_PROD }}'";/' www/scripts/app/config.js
 
       - name: Ver contenido de un archivo
         run: |
