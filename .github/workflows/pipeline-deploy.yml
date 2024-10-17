@@ -66,7 +66,6 @@ jobs:
         
       - name: Create Xcode Project
         run: |
-          cordova clean ios || true
           cordova platform rm ios || true
           cordova platform add ios
           cordova build ios --buildConfig=build.json
