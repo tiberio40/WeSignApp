@@ -30,6 +30,8 @@ jobs:
         with:          
           name: xcode-build          
           path: platforms/ios
+      - name: Mostrar contenido JSON
+        run: build.json
 
   deploy:    
     needs: build    
