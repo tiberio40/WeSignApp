@@ -11,7 +11,24 @@ jobs:
   build:    
     runs-on: macos-latest    
     steps:      
-      - uses: actions/checkout@v4      
+      - uses: actions/checkout@v4     
+      - name: Set up Provisioning Profiles and Certificates        
+        env:
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          BUILD_CERTIFICATE_PROFILE_BASE64: ${{ secrets.BUILD_CERTIFICATE_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode > /tmp/certificate.p12
+          echo "$BUILD_CERTIFICATE_PROFILE_BASE64" | base64 --decode > /tmp/provisioning_profile.mobileprovision
+          security create-keychain -p 'mi-contraseña-segura' build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p 'mi-contraseña-segura' build.keychain
+          security import /tmp/certificate.p12 -k build.keychain -P $P12_PASSWORD -T /usr/bin/codesign
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp /tmp/provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+          security list-keychains -d user -s build.keychain login.keychain
+
       - name: Install Node.js        
         uses: actions/setup-node@v4        
         with:          
@@ -22,12 +39,6 @@ jobs:
         
       - name: Install NPM        
         run: npm install
-
-      - name: Download iOS platform
-        run: xcodebuild -downloadPlatform iOS
-
-      - name: List Simulators
-        run: xcrun simctl list devices
 
       - name: Clean iOS   
         run: cordova clean ios
@@ -48,40 +59,4 @@ jobs:
           name: xcode-build          
           path: platforms/ios
 
-  deploy:    
-    needs: build    
-    runs-on: macos-latest
-    steps:      
-      - uses: actions/checkout@v4      
-      - name: Download Build Artifacts        
-        uses: actions/download-artifact@v4        
-        with:          
-          name: xcode-build      
-      - name: Install Fastlane        
-        run: sudo gem install fastlane -NV      
-      - name: Set up Provisioning Profiles and Certificates        
-        env:
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          BUILD_CERTIFICATE_PROFILE_BASE64: ${{ secrets.BUILD_CERTIFICATE_PROFILE_BASE64 }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        run: |
-          echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode > /tmp/certificate.p12
-          echo "$BUILD_CERTIFICATE_PROFILE_BASE64" | base64 --decode > /tmp/provisioning_profile.mobileprovision
-          security create-keychain -p 'mi-contraseña-segura' build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p 'mi-contraseña-segura' build.keychain
-          security import /tmp/certificate.p12 -k build.keychain -P $P12_PASSWORD -T /usr/bin/codesign
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp /tmp/provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-          security list-keychains -d user -s build.keychain login.keychain
-
-      - name: Build Xcode Project        
-        run: |
-          xcodebuild -scheme "WeSign QA" \
-          -archivePath $RUNNER_TEMP/iamgroot.xcarchive \
-          -sdk iphoneos \
-          -configuration Debug \
-          -destination generic/platform=iOS \
-          CODE_SIGN_STYLE=Manual \
-          clean archive  
+  
