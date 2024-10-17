@@ -18,19 +18,29 @@ jobs:
           node-version: '18.4.0'          
           cache: 'npm'              
       - name: Install Cordova        
-        run: npm install -g cordova      
+        run: npm install -g cordova
+        
       - name: Install NPM        
-        run: npm install      
+        run: npm install
+        
       - name: Remove Xcode Project        
         run: cordova platform rm ios
+        
       - name: Download iOS platform
         run: xcodebuild -downloadPlatform iOS
+        
       - name: Create Xcode Project
         run: cordova platform add ios
+        
       - name: Clean iOS   
         run: cordova clean ios
+
+      - name: List Simulators
+        run: xcrun simctl list devices
+        
       - name: Build iOS   
         run: cordova build ios --buildConfig=build.json -- --destination 'platform=iOS Simulator,id=87937ED1-61E8-467A-8778-0CCF5F496039'
+        
       - name: Save Build Artifacts        
         uses: actions/upload-artifact@v4        
         with:          
