@@ -27,7 +27,7 @@ jobs:
 
           # import certificate and provisioning profile from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+          echo -n "$BUILD_CERTIFICATE_PROFILE_BASE64" | base64 --decode -o $PP_PATH
 
           # verify if the provisioning profile has content
           ls -l $PP_PATH
