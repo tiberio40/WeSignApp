@@ -2,7 +2,8 @@
     "ios": {
         "debug": {
             "developmentTeam": "5W676X87Z3 ",
-            "codeSignIdentity": "Apple Developer",
+            "codeSignIdentity": "Apple Development",
+            "provisioningProfile": "8779168e-db9b-49aa-9ce6-dd5b933b8285D",
             "packageType": "development",
             "buildFlag": [
                 "-UseModernBuildSystem=1",
