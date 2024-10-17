@@ -14,4 +14,4 @@ jobs:
       - uses: actions/checkout@v4  # Asegúrate de hacer checkout del código primero
 
       - name: Run Pipeline Deploy
-        uses: ./.github/workflows/pipeline-deploy.yml
+        uses: ./github/workflows/pipeline-deploy.yml
