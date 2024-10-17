@@ -51,11 +51,7 @@ jobs:
         run: npm install -g cordova
         
       - name: Install NPM        
-        run: npm install
-
-      - name: Remove Xcode Project        
-        run: cordova platform rm ios        
-      
+        run: npm install      
         
       - name: Create Xcode Project
         run: |
