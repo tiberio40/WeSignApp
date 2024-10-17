@@ -7,7 +7,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up Provisioning Profiles and Certificates
         env:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
@@ -47,26 +46,25 @@ jobs:
           sed -i '' "s/<name>.*<\/name>/<name>WeSign<\/name>/g" config.xml
           sed -i '' 's/version="[^"]*"/version="'${{ secrets.VERSION }}'"/' config.xml
 
-      
-      - name: Install Node.js        
-        uses: actions/setup-node@v4        
-        with:          
-          node-version: '18.4.0'          
-          cache: 'npm'              
-      - name: Install Cordova        
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.4.0'
+          cache: 'npm'
+
+      - name: Install Cordova
         run: npm install -g cordova
-        
-      - name: Install NPM        
-        run: npm install      
-        
+
+      - name: Install NPM
+        run: npm install
+
       - name: Create Xcode Project
         run: |
           cordova platform rm ios || true
           cordova platform add ios
           cordova build ios --buildConfig=build.json
 
-
-      - name: Create IPA   
+      - name: Create IPA
         run: cordova build ios --device
 
       - name: Save Build Artifacts
