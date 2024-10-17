@@ -47,17 +47,35 @@ jobs:
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           BUILD_CERTIFICATE_PROFILE_BASE64: ${{ secrets.BUILD_CERTIFICATE_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
-          echo "$BUILD_CERTIFICATE_BASE64" | base64 --decode > /tmp/certificate.p12
-          echo "$BUILD_CERTIFICATE_PROFILE_BASE64" | base64 --decode > /tmp/provisioning_profile.mobileprovision
-          security create-keychain -p 'mi-contraseña-segura' build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p 'mi-contraseña-segura' build.keychain
-          security import /tmp/certificate.p12 -k build.keychain -P $P12_PASSWORD -T /usr/bin/codesign
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp /tmp/provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-          security list-keychains -d user -s build.keychain login.keychain
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles 
 
       - name: Build Xcode Project        
         run: |
-          xcodebuild -workspace "WeSign QA.xcworkspace" -scheme "WeSign QA" -configuration Debug -sdk iphoneos -destination 'generic/platform=iOS' build -allowProvisioningUpdates DEVELOPMENT_TEAM=5W676X87Z3 PROVISIONING_PROFILE=8779168e-db9b-49aa-9ce6-dd5b933b8285 CODE_SIGN_STYLE=Manual IPHONEOS_DEPLOYMENT_TARGET=12.0
+          xcodebuild -scheme "WeSign QA" \
+          -archivePath $RUNNER_TEMP/iamgroot.xcarchive \
+          -sdk iphoneos \
+          -configuration Debug \
+          -destination generic/platform=iOS \
+          clean archive  
