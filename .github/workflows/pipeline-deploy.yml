@@ -29,6 +29,9 @@ jobs:
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
           echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
 
+          # verify if the provisioning profile has content
+          ls -l $PP_PATH
+
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
@@ -57,27 +60,7 @@ jobs:
       - name: Verify Keychain Permissions
         run: security set-keychain-settings $RUNNER_TEMP/app-signing.keychain-db
 
-      - name: Install Node.js        
-        uses: actions/setup-node@v4        
-        with:          
-          node-version: '18.4.0'          
-          cache: 'npm'              
-      - name: Install Cordova        
-        run: npm install -g cordova
-        
-      - name: Install NPM        
-        run: npm install      
-        
-      - name: Create Xcode Project
-        run: |
-          cordova clean ios || true
-          cordova platform rm ios || true
-          cordova platform add ios
-          cordova build ios --buildConfig=build.json
-
-
-      - name: Create IPA   
-        run: cordova build ios --device
+      
 
       - name: Save Build Artifacts
         uses: actions/upload-artifact@v4
