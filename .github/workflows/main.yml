@@ -11,5 +11,7 @@ jobs:
   main_job:
     runs-on: macos-latest
     steps:
-      - name: Run Common Steps
+      - uses: actions/checkout@v4  # Asegúrate de hacer checkout del código primero
+
+      - name: Run Pipeline Deploy
         uses: ./.github/workflows/pipeline-deploy.yml
