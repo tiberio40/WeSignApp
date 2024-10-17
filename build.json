@@ -1,0 +1,22 @@
+{
+    "ios": {
+        "debug": {
+            "developmentTeam": "5W676X87Z3 ",
+            "codeSignIdentity": "Apple Developer",
+            "packageType": "development",
+            "buildFlag": [
+                "-UseModernBuildSystem=1",
+                "IPHONEOS_DEPLOYMENT_TARGET=15.0"
+            ]
+        },
+        "release": {
+            "developmentTeam": "5W676X87Z3 ",
+            "codeSignIdentity": "Apple Distribution",
+            "packageType": "app-store",
+            "buildFlag": [
+                "-UseModernBuildSystem=1",
+                "IPHONEOS_DEPLOYMENT_TARGET=15.0"
+            ]
+        }
+    }
+}
