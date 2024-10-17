@@ -42,6 +42,21 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
+      - name: Verify Provisioning Profile
+        run: ls -l ~/Library/MobileDevice/Provisioning\ Profiles
+
+      - name: List Keychains
+        run: security list-keychains
+
+      - name: Unlock Keychain
+        run: security unlock-keychain -p $KEYCHAIN_PASSWORD $RUNNER_TEMP/app-signing.keychain-db
+
+      - name: Set Default Keychain
+        run: security list-keychains -s $RUNNER_TEMP/app-signing.keychain-db /Users/runner/Library/Keychains/login.keychain-db /Library/Keychains/System.keychain
+
+      - name: Verify Keychain Permissions
+        run: security set-keychain-settings $RUNNER_TEMP/app-signing.keychain-db
+
       - name: Install Node.js        
         uses: actions/setup-node@v4        
         with:          
