@@ -1,0 +1,94 @@
+name: Pipeline Deploy
+
+on:
+  push:
+    branches: [ "qa" ]
+  pull_request:
+    branches: [ "qa" ]
+  workflow_dispatch:
+
+env:
+  APP_NAME: "WeSign QA"
+  ENVIRONMENT: "EnviromentType.qa" 
+  ENV: "QA"
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Provisioning Profiles and Certificates
+        env:
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          BUILD_CERTIFICATE_PROFILE_BASE64: ${{ secrets.BUILD_CERTIFICATE_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: K3ych@1nP@ssw0rd
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$BUILD_CERTIFICATE_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+
+          # verify if the provisioning profile has content
+          ls -l $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+      - name: Change XML Node Value
+        run: |
+          # Set the new name
+          sed -i '' "s/<name>.*<\/name>/<name>${{ env.APP_NAME }}<\/name>/g" config.xml
+          sed -i '' 's/version="[^"]*"/version="'${{ vars.VERSION }}'"/' config.xml
+          sed -i '' 's/var vesionAppConfig = ".*";/var vesionAppConfig = "'${{ vars.VERSION }}'";/' www/scripts/app/config.js
+          sed -i '' 's/var environmentConfig = EnviromentType\.[a-z]*;/var environmentConfig = '${{ env.ENVIRONMENT }}';/' www/scripts/app/config.js
+
+      
+      - name: Install Node.js        
+        uses: actions/setup-node@v4        
+        with:          
+          node-version: '18.4.0'          
+          cache: 'npm'              
+      - name: Install Cordova        
+        run: npm install -g cordova
+        
+      - name: Install NPM        
+        run: npm install      
+        
+      - name: Create Xcode Project
+        run: |
+          cordova platform rm ios || true
+          cordova platform add ios
+          cordova build ios --buildConfig=build.json
+
+      - name: Create IPA   
+        run: cordova build ios --device
+
+      - name: Rename IPA file
+        run: |
+          NEW_VERSION=$(echo ${{ vars.VERSION }} | tr '.' '_')
+          mv platforms/ios/build/Debug-iphoneos/${{ env.APP_NAME }}.ipa \
+          platforms/ios/build/Debug-iphoneos/${{ env.APP_NAME }}_${NEW_VERSION}_${{ env.ENV }}.ipa
+
+        
+      - name: Save Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcode-build
+          path: platforms/ios/build/Debug-iphoneos/*.ipa
