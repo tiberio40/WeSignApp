@@ -66,7 +66,5 @@ jobs:
           -sdk iphoneos \
           -configuration Debug \
           -destination generic/platform=iOS \
-          DEVELOPMENT_TEAM=5W676X87Z3 \
-          PROVISIONING_PROFILE=8779168e-db9b-49aa-9ce6-dd5b933b8285 \
           CODE_SIGN_STYLE=Manual \
           clean archive  
