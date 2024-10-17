@@ -31,7 +31,7 @@ jobs:
           name: xcode-build          
           path: platforms/ios
       - name: Mostrar contenido JSON
-        run: build.json
+        run: cat build.json
 
   deploy:    
     needs: build    
