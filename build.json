@@ -3,8 +3,8 @@
         "debug": {
             "developmentTeam": "5W676X87Z3",
             "codeSignIdentity": "Apple Development",
-            "provisioningProfile": "8779168e-db9b-49aa-9ce6-dd5b933b8285",
             "packageType": "development",
+            "automaticProvisioning": true
             "buildFlag": [
                 "-UseModernBuildSystem=1",
                 "IPHONEOS_DEPLOYMENT_TARGET=15.0"
