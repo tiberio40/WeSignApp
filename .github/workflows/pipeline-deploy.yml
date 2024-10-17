@@ -59,10 +59,11 @@ jobs:
         
       - name: Create Xcode Project
         run: |
-              cordova clean ios
-              cordova platform rm ios        
-              cordova platform add ios
-              cordova build ios --buildConfig=build.json
+          cordova clean ios || true
+          cordova platform rm ios || true
+          cordova platform add ios
+          cordova build ios --buildConfig=build.json
+
 
       - name: Create IPA   
         run: cordova build ios --device
