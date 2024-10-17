@@ -42,20 +42,32 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-      - name: List Keychains
-        run: security list-keychains
+      - name: Install Node.js        
+        uses: actions/setup-node@v4        
+        with:          
+          node-version: '18.4.0'          
+          cache: 'npm'              
+      - name: Install Cordova        
+        run: npm install -g cordova
+        
+      - name: Install NPM        
+        run: npm install
 
-      - name: Unlock Keychain
-        run: security unlock-keychain -p $KEYCHAIN_PASSWORD $RUNNER_TEMP/app-signing.keychain-db
+      - name: Clean iOS   
+        run: cordova clean ios
+        
+      - name: Remove Xcode Project        
+        run: cordova platform rm ios        
+      
+        
+      - name: Create Xcode Project
+        run: cordova platform add ios       
+        
+      - name: Build iOS   
+        run: cordova build ios --buildConfig=build.json
 
-      - name: Set Default Keychain
-        run: security list-keychains -s $RUNNER_TEMP/app-signing.keychain-db /Users/runner/Library/Keychains/login.keychain-db /Library/Keychains/System.keychain
-
-      - name: Verify Keychain Permissions
-        run: security set-keychain-settings $RUNNER_TEMP/app-signing.keychain-db
-
-      - name: Check Disk Space
-        run: df -h
+      - name: Create IPA   
+        run: cordova build ios --device
 
       - name: Save Build Artifacts
         uses: actions/upload-artifact@v4
