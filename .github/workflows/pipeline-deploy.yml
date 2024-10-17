@@ -87,4 +87,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: xcode-build
-          path: platforms/ios
+          path: platforms/ios/build/Debug-iphoneos/*.ipa
