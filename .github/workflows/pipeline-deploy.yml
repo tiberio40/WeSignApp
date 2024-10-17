@@ -26,7 +26,7 @@ jobs:
       - name: Create Xcode Project        
         run: cordova platform add ios   
       - name: Build iOS   
-        run: cordova build ios --buildConfig=build.json -- --destination 'generic/platform=iOS'
+        run: cordova build ios --buildConfig=build.json -- --destination 'generic/platform=iOS Simulator'
       - name: Save Build Artifacts        
         uses: actions/upload-artifact@v4        
         with:          
