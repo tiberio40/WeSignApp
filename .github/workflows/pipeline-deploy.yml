@@ -22,13 +22,15 @@ jobs:
       - name: Install NPM        
         run: npm install      
       - name: Remove Xcode Project        
-        run: cordova platform rm ios      
-      - name: Create Xcode Project
-        run: cordova platform add ios
+        run: cordova platform rm ios
       - name: Download iOS platform
         run: xcodebuild -downloadPlatform iOS
+      - name: Create Xcode Project
+        run: cordova platform add ios
+      - name: Clean iOS   
+        run: cordova clean ios
       - name: Build iOS   
-        run: cordova build ios --buildConfig=build.json -- --destination 'platform=iOS Simulator,OS=17.0.1,name=iPad (10th generation)'
+        run: cordova build ios --buildConfig=build.json -- --destination 'platform=iOS Simulator'
       - name: Save Build Artifacts        
         uses: actions/upload-artifact@v4        
         with:          
