@@ -39,7 +39,7 @@ jobs:
         run: xcrun simctl list devices
         
       - name: Build iOS   
-        run: cordova build ios --buildConfig=build.json -- --destination 'platform=iOS Simulator,id=87937ED1-61E8-467A-8778-0CCF5F496039'
+        run: cordova build ios --buildConfig=build.json -- --destination 'platform=iOS Simulator,id=2B09B28F-AA2C-442A-92D5-08B10B9E97EE'
         
       - name: Save Build Artifacts        
         uses: actions/upload-artifact@v4        
