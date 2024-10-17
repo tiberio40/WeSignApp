@@ -51,6 +51,8 @@ jobs:
           # Set the new name
           sed -i '' "s/<name>.*<\/name>/<name>WeSign<\/name>/g" config.xml
           sed -i '' 's/version="[^"]*"/version="'${{ secrets.VERSION }}'"/' config.xml
+          sed -i '' 's/var vesionAppConfig = ".*";/var vesionAppConfig = "'${{ secrets.VERSION }}'";/' www/scripts/app/config.js
+          sed -i '' 's/var environmentConfig  = ".*";/var environmentConfig  = "'${{ secrets.ENVIRONMENT_PROD }}'";/' www/scripts/app/config.js
 
       
       - name: Install Node.js        
