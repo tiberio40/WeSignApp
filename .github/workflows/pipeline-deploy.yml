@@ -53,18 +53,16 @@ jobs:
       - name: Install NPM        
         run: npm install
 
-      - name: Clean iOS   
-        run: cordova clean ios
-        
       - name: Remove Xcode Project        
         run: cordova platform rm ios        
       
         
       - name: Create Xcode Project
-        run: cordova platform add ios       
-        
-      - name: Build iOS   
-        run: cordova build ios --buildConfig=build.json
+        run: |
+              cordova clean ios
+              cordova platform rm ios        
+              cordova platform add ios
+              cordova build ios --buildConfig=build.json
 
       - name: Create IPA   
         run: cordova build ios --device
