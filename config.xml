@@ -57,6 +57,6 @@
         </edit-config>
     </platform>
     <preference name="orientation" value="landscape" />
-    <preference name="target-device" value="tablet" />
+    <preference name="target-device" value="universal" />
 
 </widget>
