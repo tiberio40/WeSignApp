@@ -78,4 +78,6 @@ jobs:
           -sdk iphoneos \
           -configuration Debug \
           -destination generic/platform=iOS \
+          DEVELOPMENT_TEAM=5W676X87Z3 \
+          IPHONEOS_DEPLOYMENT_TARGET=12.0 \
           clean archive  
