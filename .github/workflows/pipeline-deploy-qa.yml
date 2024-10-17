@@ -79,9 +79,6 @@ jobs:
 
       - name: Create IPA   
         run: cordova build ios --device
-
-      
-
         
       - name: Save Build Artifacts
         uses: actions/upload-artifact@v4
