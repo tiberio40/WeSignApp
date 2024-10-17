@@ -1,0 +1,15 @@
+name: Main Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  main_job:
+    runs-on: macos-latest
+    steps:
+      - name: Run Common Steps
+        uses: ./.github/workflows/pipeline-deploy.yml
