@@ -80,12 +80,6 @@ jobs:
       - name: Create IPA   
         run: cordova build ios --device
 
-      - name: Rename IPA file
-        run: |
-          NEW_VERSION=$(echo ${{ vars.VERSION }} | tr '.' '_')
-          mv platforms/ios/build/Debug-iphoneos/${{ env.APP_NAME }}.ipa \
-          platforms/ios/build/Debug-iphoneos/${{ env.APP_NAME }}_${NEW_VERSION}_${{ env.ENV }}.ipa
-
         
       - name: Save Build Artifacts
         uses: actions/upload-artifact@v4
