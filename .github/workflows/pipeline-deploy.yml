@@ -70,7 +70,6 @@ jobs:
           cordova platform add ios
           cordova build ios --buildConfig=build.json
 
-
       - name: Create IPA   
         run: cordova build ios --device
 
@@ -79,3 +78,27 @@ jobs:
         with:
           name: xcode-build
           path: platforms/ios/build/Debug-iphoneos/*.ipa
+          
+  update_version:
+    needs: build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+  
+      - name: Read current version
+        id: read_version
+        run: |
+          current_version=$(jq -r '.version' version.json)
+          echo "current_version=$current_version" >> $GITHUB_ENV
+  
+      - name: Increment version
+        run: |
+          NEW_VERSION=$(echo $current_version | awk -F. -v OFS=. '{$NF++;print}')
+          jq --arg new_version "$NEW_VERSION" '.version = $new_version' version.json > tmp.$$.json && mv tmp.$$.json version.json
+          echo "Updated version to $NEW_VERSION"
+  
+      - name: Upload updated version
+        uses: actions/upload-artifact@v4
+        with:
+          name: version-file
+          path: version.json
