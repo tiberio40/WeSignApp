@@ -53,6 +53,9 @@ jobs:
       - name: Build iOS   
         run: cordova build ios --buildConfig=build.json
         
+      - name: Build IPA   
+        run: cordova build ios ----device
+        
       - name: Save Build Artifacts        
         uses: actions/upload-artifact@v4        
         with:          
