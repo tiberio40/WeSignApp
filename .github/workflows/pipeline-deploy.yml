@@ -39,7 +39,7 @@ jobs:
         run: xcrun simctl list devices
         
       - name: Build iOS   
-        run: cordova build ios --buildConfig=build.json -- --destination 'platform=iOS Simulator,name=iPad Pro (12.9-inch) (6th generation),OS=17.0'
+        run: cordova build ios --release
         
       - name: Save Build Artifacts        
         uses: actions/upload-artifact@v4        
