@@ -61,7 +61,27 @@ jobs:
       - name: Verify Keychain Permissions
         run: security set-keychain-settings $RUNNER_TEMP/app-signing.keychain-db
 
-      
+      - name: Install Node.js        
+        uses: actions/setup-node@v4        
+        with:          
+          node-version: '18.4.0'          
+          cache: 'npm'              
+      - name: Install Cordova        
+        run: npm install -g cordova
+        
+      - name: Install NPM        
+        run: npm install      
+        
+      - name: Create Xcode Project
+        run: |
+          cordova clean ios || true
+          cordova platform rm ios || true
+          cordova platform add ios
+          cordova build ios --buildConfig=build.json
+
+
+      - name: Create IPA   
+        run: cordova build ios --device
 
       - name: Save Build Artifacts
         uses: actions/upload-artifact@v4
