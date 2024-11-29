@@ -13,7 +13,7 @@
                                 <span>Delete Document</span>
                             </div>
                             <div>
-                                <button ng-click="vm.edit(); $event.stopPropagation();" style="text-align:center; width: 17vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;" class="btn btn-primary">Edit</button>
+                                <button ng-hide="vm.hideEdit()" ng-click="vm.edit(); $event.stopPropagation();" style="text-align:center; width: 17vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;" class="btn btn-primary">Edit</button>
                             </div>
                             <div ng-click="vm.sendEmail()" class="btn-cmt btn-cmt-primary" style="margin-top:10px; text-align:center; width: 17vw; height: 4vh; background-color:#6aa7f1; border:2px solid #ccc;">
                                 <span>Send via Email</span>
